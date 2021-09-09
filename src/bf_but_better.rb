@@ -231,6 +231,15 @@ def to_type_tokens tok
         a = tok[i]
 
         if a.is_i?
+            num = a.to_i
+
+            if num >= $INT_LIMIT
+                puts ("\nWARNING: integer " + a + ' exceeds maximum size of ' +
+                    ($INT_LIMIT - 1).to_s + ', it will be interpreted as ' +
+                    (num % $INT_LIMIT).to_s)
+                puts ''
+            end
+
             types.push a.to_i % $INT_LIMIT
         elsif (a.start_with? ?" and a.end_with? ?") or (a.start_with? ?' and a.end_with? ?')
             ch = a[1...-1]
@@ -267,7 +276,6 @@ def compile tok, in_global_scope: true
     end
 
     puts 'compiling... ' + tok.to_s
-    puts 'Address: ' + $addr.to_s
 
     compiled = ''
 
@@ -303,28 +311,44 @@ def compile tok, in_global_scope: true
 
         compiled += compile $subs[name]
 
-    # elsif tok[0] == :include
-    #     if tok.size > 2
-    #         error 'too many arguments for include statement'
-    #     end
+    elsif tok[0] == :include
+        if tok.size > 2
+            error 'too many arguments for include statement'
+        end
 
-    #     if !in_global_scope
-    #         error 'can only include modules in global scope'
-    #     end
+        if !in_global_scope
+            error 'can only include modules in global scope'
+        end
 
-    #     name = tok[1]
+        name = tok[1]
+        full_name = name
+        module_code = nil
 
-    #     if Symbol === name
-    #         name = name.to_s
+        if Symbol === name
+            name = name.to_s
+        end
 
-    #     # Just debugging stuff
-    #     puts 'INCLUDE!!! ' + name.to_s + '...'
+        # Just debugging stuff
+        puts 'INCLUDE!!! ' + name.to_s + '...'
 
-    #     if !$modules.include? name
-    #         error 'module "' + name.to_s + '" does not exist'
-    #     end
+        # Search for a module in builtins
+        if $builtin_modules.include? name
+            full_name = $builtin_modules[name]
+            module_code = File.read(full_name)
 
-    #     compiled += compile $modules[name]
+        # Search for a module in the current directory
+        elsif Dir['.'].include? name
+            module_code = File.read(name)
+        elsif Dir['.'].include? name + '.bfb'
+            full_name = name + '.bfb'
+            module_code = File.read(full_name)
+        end
+
+        if module_code.nil?
+            error 'module "' + name.to_s + '" does not exist'
+        end
+
+        compiled += compile_file_code module_code, fname: full_name
 
     elsif tok[0] == :while
         code_block_index = tok.map { |x| x.to_s.start_with? '{' and x.to_s.end_with? '}' }
@@ -492,9 +516,9 @@ def compile tok, in_global_scope: true
             compiled += (compile [token]) + '.'
         end
 
-    elsif tok[0] == :printstr
+    elsif tok[0] == :printstr or tok[0] == :println
         if tok.size > 2
-            error 'too many arguments given to printstr keyword'
+            error "too many arguments given to #{tok[0]} keyword"
         end
 
         str = tok[1]
@@ -503,6 +527,11 @@ def compile tok, in_global_scope: true
         # Print the string letter by letter
         str.chars.each do |ch|
             compiled += compile [:print, ch.ord]
+        end
+
+        # Print a newline if this is println
+        if tok[0] == :println
+            compiled += compile [:print, 10]
         end
 
     elsif tok[0] == :input
@@ -722,6 +751,28 @@ def compile tok, in_global_scope: true
 
         # The result is stored in the current address
 
+    # Address of
+    elsif tok[0] == :&
+        if tok.size > 2
+            error 'too many arguments for the "address of" operator ("&")'
+        end
+
+        name = tok[1]
+
+        if !$var.include? name
+            error 'tried to get the address of "' + name.to_s + '", which hasn\'t been declared yet'
+        end
+
+        address = $var[name]
+
+        # Treat this address as a regular integer and push it into the current
+        # address
+
+        # Keep in mind that at this point in time there can only be 256
+        # different addresses before an overflow occurs
+
+        compiled += compile [address]
+
     # Code block (should be low precedence)
     elsif (
         tok[0].to_s.start_with? ?{ and tok[0].to_s.end_with? ?}
@@ -817,6 +868,21 @@ def compile tok, in_global_scope: true
     return compiled
 end
 
+def compile_file_code code, fname: '<string>'
+    compiled = ''
+
+    code_tokenised = file_tok code
+    code_tokenised.each do |line|
+        $current_context = fname
+        $current_line += 1
+
+        tok = to_type_tokens tokenise line
+        compiled += compile tok
+    end
+
+    return compiled
+end
+
 def post_process code
     clean_code = ''
     slides = 0
@@ -869,6 +935,7 @@ $bin_opers = '+-*/%&|^><'.chars + [
 $unary_opers = '!~'.chars + []
 
 $fname = ARGV.first
+$out_file = (ARGV.size > 1) ? ARGV[1] : '_out.bf'
 $code = File.read($fname)
 $current_line = 0
 $current_context = $fname
@@ -882,93 +949,23 @@ $addr = 0
 $var = {}
 $subs = {}
 # $modules = {}
+$builtin_modules = {}
 
-# Builtin subroutines
-$subs[:*] = '''{
-R0 = 0
-
-while r0 {
-    R0 += r1
-    --r0
-}
-}'''
-
-$subs[:/] = '''{
-<> Args
-<> r0: dividend (numerator)
-<> r1: divisor (denominator)
-
-<> Returns
-<> R0: quotient
-<> R1: remainder
-
-R0 = 0 <> Quotient
-
-while r0 >= r1 {
-    ++R0
-    r0 -= r1
-}
-
-R1 = r0 <> Remainder
-}'''
-
-$subs[:printnum] = """{
-<> Args
-<> r0: number to print
-
-<> Radix/base
-r1 = 10
-
-call /
-r0 = R0
-_printnum_digit3 = R1
-
-call /
-r0 = R0
-_printnum_digit2 = R1
-
-call /
-r0 = R0
-_printnum_digit1 = R1
-
-if _printnum_digit1 {
-    print '0' + _printnum_digit1
-}
-
-if _printnum_digit1 or _printnum_digit2 {
-    print '0' + _printnum_digit2
-}
-
-print '0' + _printnum_digit3
-}"""
-
-# Builtin modules
-# $modules[:io] = """
-# dec _printnum_digit1
-# dec _printnum_digit2
-# dec _printnum_digit3
-# """
+Dir['./builtins/*.bfb'].each do |path|
+    module_id = path[11...-4]
+    $builtin_modules[module_id] = path
+end
 
 # Tokenise the subroutines
-$subs.each_key do |name|
-    $subs[name] = to_type_tokens tokenise $subs[name]
-end
+# $subs.each_key do |name|
+#     $subs[name] = to_type_tokens tokenise $subs[name]
+# end
 
-$code_tokenised = file_tok $code
-$code_tokenised.each do |line|
-    $current_context = $fname
-    $current_line += 1
-
-    tok = to_type_tokens tokenise line
-    compiled = compile tok
-    $compiled += compiled
-    # $compiled += $SEP if !compiled.empty?
-end
+# Compile whole input file
+$compiled = compile_file_code $code, fname: $fname
 
 # Post processing
 $clean_code = post_process $compiled
 
 # Write compiled code
-# $out_file = $fname = '.out'
-$out_file = '_out.bf'
 File.write($out_file, $clean_code + $/)

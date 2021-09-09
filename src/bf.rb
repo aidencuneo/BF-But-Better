@@ -8,7 +8,9 @@ int main() {
 '''.lstrip
 
 # Pre-processing
-$raw = $<.read.chars
+$fname = ARGV.first
+$out_file = (ARGV.size > 1) ? ARGV[1] : '_out.c'
+$raw = File.read($fname).chars
 $code = ''
 
 $raw.each do |ch|
@@ -88,4 +90,4 @@ end
 # If any variables still hold values here, they can safely be ignored because
 # they don't contribute in any way to the output of the program
 
-File.write('_out.c', o + "}\n")
+File.write($out_file, o + "}\n")

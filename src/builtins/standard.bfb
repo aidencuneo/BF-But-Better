@@ -1,0 +1,73 @@
+<> Declarations for subroutines in this module
+dec r0
+dec r1
+dec R0
+dec R1
+
+dec _printnum_digit1
+dec _printnum_digit2
+dec _printnum_digit3
+
+INT_MIN = 0
+INT_MAX = 255
+
+<> Multiply
+sub * {
+    R0 = 0
+
+    while r0 {
+        R0 += r1
+        --r0
+    }
+}
+
+<> Divide
+sub / {
+    <> Args
+    <> r0: dividend (numerator)
+    <> r1: divisor (denominator)
+
+    <> Returns
+    <> R0: quotient
+    <> R1: remainder
+
+    R0 = 0 <> Quotient
+
+    while r0 >= r1 {
+        ++R0
+        r0 -= r1
+    }
+
+    R1 = r0 <> Remainder
+}
+
+<> Print value as a decimal number
+sub printnum {
+    <> Args
+    <> r0: number to print
+
+    <> Radix/base
+    r1 = 10
+
+    call /
+    r0 = R0
+    _printnum_digit3 = R1
+
+    call /
+    r0 = R0
+    _printnum_digit2 = R1
+
+    call /
+    r0 = R0
+    _printnum_digit1 = R1
+
+    if _printnum_digit1 {
+        print '0' + _printnum_digit1
+    }
+
+    if _printnum_digit1 or _printnum_digit2 {
+        print '0' + _printnum_digit2
+    }
+
+    print '0' + _printnum_digit3
+}

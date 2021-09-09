@@ -1,0 +1,11 @@
+include standard
+include math
+
+r0 = 1
+call factorial
+result = R0
+
+r0 = result
+call printnum
+
+print '\n'

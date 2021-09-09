@@ -1,0 +1,32 @@
+<> Declarations for subroutines in this module
+dec r0
+dec r1
+dec R0
+dec R1
+
+dec _factorial_number
+dec _factorial_result
+dec _factorial_i
+
+<> Calculate the factorial of a number
+sub factorial {
+    <> Args
+    <> r0: Number to calculate the factorial of
+
+    <> Returns
+    <> R0: Calculated factorial
+
+    _factorial_number = r0
+    _factorial_result = 1
+    _factorial_i = 2
+
+    while _factorial_i < _factorial_number {
+        r0 = _factorial_result
+        r1 = _factorial_i
+        call *
+
+        _factorial_result = R1
+
+        ++_factorial_i
+    }
+}
