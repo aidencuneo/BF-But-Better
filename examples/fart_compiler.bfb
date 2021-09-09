@@ -1,0 +1,28 @@
+dec c
+dec i
+a = input
+
+while a {
+    c = 9 <> Maximum instruction + 1
+
+    if a == '+' { c = 0 }
+    if a == '-' { c = 1 }
+    if a == '>' { c = 2 }
+    if a == '<' { c = 3 }
+    if a == ',' { c = 4 }
+    if a == '.' { c = 5 }
+    if a == '[' { c = 6 }
+    if a == ']' { c = 7 }
+    if a == ':' { c = 8 }
+
+    if c != 9 {
+        i = 0
+        while i < c {
+            printstr 'fart '
+            ++i
+        }
+        printstr 'stinky\n'
+    }
+
+    a = input
+}
