@@ -915,8 +915,8 @@ def compile tok, in_global_scope: true
             error 'too many arguments for the dereference operator ("*")'
         end
 
-        address = tok[1]
-        puts address
+        address = [tok[1]]
+        puts address.to_s
 
         # During most of this operation, the compiler doesn't know where the
         # pointer is, which means the pointer must come back to exactly where
@@ -960,10 +960,10 @@ def compile tok, in_global_scope: true
         compiled += (
         """
         [
-            [-<<+>>] < [-<<+>>] >>>> [-<<<+>>>]
+            [-<<+>>] >>> [-<<<+>>>]
             <<<<<-
             [
-                [-<<<+>>>] < [-<<<+>>>] >>> [-<<<+>>>]
+                [-<<<+>>>] >> [-<<<+>>>]
                 <<<<<-
             ]
         ]
@@ -975,11 +975,8 @@ def compile tok, in_global_scope: true
 
         # The desired address has been reached
 
-        # Now copy the value from empty1 to its new home (but not before
-        # clearing the old value))
-        compiled += '[-]>[-<+>]<'
-
-        # abort compiled
+        # Now copy the value from this address to empty2
+        compiled += '[->+>+<<]>[-<+>]<'
 
         # Copy the second distance cell to empty1
         compiled += '>>>>[-<<<+>>>]'
@@ -990,27 +987,29 @@ def compile tok, in_global_scope: true
         # Go forward to the current address
 
         # Move forwards until distance is 0
+        # (and carry the value along the way)
 
         compiled += (
         """
         [
-            [->+<]
-            >
+            [->>>+<<<] > [->>>+<<<]
+            >>-
             [
-                [->>>+<<<]
-                >>>-
+                [->>>+<<<] > [->>>+<<<]
+                >>-
             ]
         ]
-
-        <<
         """.gsub! ' ', '').gsub! $/, ''
 
-        # (the last line here is to align with the current address)
+        # Copy value from empty2 to the current address
+        compiled += '>[-<<+>>]'
+
+        # Align with the current address
+        compiled += '<<'
 
         # Current address has been reached
 
         # Done
-
 
     # Code block (should be low precedence)
     elsif (
