@@ -1,3 +1,8 @@
+# My added ones
+_out.*
+
+# All the rest
+
 *.gem
 *.rbc
 /.config
