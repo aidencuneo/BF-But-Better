@@ -1,15 +1,14 @@
 include standard
 <> include math
 
-dec array 16
-ARRAY_SIZE = 16
+dec array 128
+ARRAY_SIZE = 128
 
 for i = 0; i < ARRAY_SIZE; ++i {
     (&array) + i := i + 1
 }
 
 for i = 0; i < ARRAY_SIZE; ++i {
-    <> print '0' + (*((&array) + i))
     r0 = (*((&array) + i))
     call printnum
     print '\n'
