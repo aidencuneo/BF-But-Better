@@ -1,11 +1,7 @@
-include standard
-include math
+<> include standard
+<> include math
 
-r0 = 1
-call factorial
-result = R0
-
-r0 = result
-call printnum
-
-print '\n'
+dec array 2
+&array := 5
+(&array) + 1 := 3
+*((&array) + 1)

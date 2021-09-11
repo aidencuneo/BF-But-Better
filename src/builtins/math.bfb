@@ -20,13 +20,10 @@ sub factorial {
     _factorial_result = 1
     _factorial_i = 2
 
-    while _factorial_i < _factorial_number {
-        r0 = _factorial_result
-        r1 = _factorial_i
-        call *
-
-        _factorial_result = R1
-
+    while _factorial_i <= _factorial_number {
+        _factorial_result = _factorial_result * _factorial_i
         ++_factorial_i
     }
+
+    R0 = _factorial_result
 }
