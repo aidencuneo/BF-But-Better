@@ -8,6 +8,23 @@ def lpad s, pad_len, pad_char
     return pad_char * (pad_len - s.size) + s
 end
 
+def array_split arr, split_at
+    out = []
+    current = []
+
+    arr.each do |a|
+        if a == split_at
+            out.push current
+            current = []
+        else
+            current.push a
+        end
+    end
+
+    out.push current
+    out
+end
+
 def error msg
     puts "\nCompilation terminated:\n"
 
@@ -120,7 +137,7 @@ def file_tok code
     end
 
     out.push current
-    return out
+    out
 end
 
 def tokenise line
@@ -371,6 +388,47 @@ def compile tok, in_global_scope: true
             compiled += ']'
         end
 
+    elsif tok[0] == :for
+        code_block_index = tok.map { |x| x.to_s.start_with? '{' and x.to_s.end_with? '}' }
+        code_block_index = code_block_index.index true
+
+        if code_block_index.nil?
+            error 'for loop without code block'
+        end
+
+        info = array_split tok[1...code_block_index], :';'
+        code = [tok[code_block_index]]
+
+        # Extract all the for loop stuff and use it
+        puts info.to_s
+
+        if info.size < 3
+            error 'invalid syntax in for loop (expected more ";" symbols)'
+        elsif info.size > 3
+            error 'invalid syntax in for loop (expected fewer ";" symbols)'
+        end
+
+        initialise = info[0]
+        condition = info[1]
+        ending = info[2]
+
+        if condition.empty?
+            condition = [1]
+        end
+
+        compiled += compile initialise
+
+        if tok.size == 2
+            compiled += '[' + (compile tok[1]) + ']'
+        else
+            compiled += compile condition
+            compiled += '['
+            compiled += compile code
+            compiled += compile ending
+            compiled += compile condition
+            compiled += ']'
+        end
+
     elsif tok[0] == :if
         code_block_index = tok.map { |x| x.to_s.start_with? '{' and x.to_s.end_with? '}' }
         code_block_index = code_block_index.index true
@@ -448,7 +506,7 @@ def compile tok, in_global_scope: true
         # Reassignment is allowed in any scope
         if $var.include? name
             # Get new variable value
-            # compiled += '[-]' # Not sure if this line is needed
+            compiled += '[-]' # Not sure if this line is needed
             compiled += compile value
 
             dist = ($addr - $var[name]) * 3

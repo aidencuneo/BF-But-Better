@@ -21,7 +21,7 @@ sub factorial {
     _factorial_i = 2
 
     while _factorial_i <= _factorial_number {
-        _factorial_result = _factorial_result * _factorial_i
+        _factorial_result *= _factorial_i
         ++_factorial_i
     }
 

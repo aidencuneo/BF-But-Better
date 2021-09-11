@@ -8,19 +8,6 @@ dec _printnum_digit1
 dec _printnum_digit2
 dec _printnum_digit3
 
-INT_MIN = 0
-INT_MAX = 255
-
-<> Multiply
-sub * {
-    R0 = 0
-
-    while r0 {
-        R0 += r1
-        --r0
-    }
-}
-
 <> Divide
 sub / {
     <> Args

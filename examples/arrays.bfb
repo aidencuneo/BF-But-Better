@@ -1,18 +1,16 @@
-<> include standard
+include standard
 <> include math
 
-dec array 4
-ARRAY_SIZE = 4
+dec array 16
+ARRAY_SIZE = 16
 
-i = 0
-while i < ARRAY_SIZE {
+for i = 0; i < ARRAY_SIZE; ++i {
     (&array) + i := i + 1
-    ++i
 }
 
-i = 0
-while i < ARRAY_SIZE {
-    print '0' + (*((&array) + i))
+for i = 0; i < ARRAY_SIZE; ++i {
+    <> print '0' + (*((&array) + i))
+    r0 = (*((&array) + i))
+    call printnum
     print '\n'
-    ++i
 }
