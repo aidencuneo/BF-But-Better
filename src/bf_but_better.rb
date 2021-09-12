@@ -250,14 +250,19 @@ def to_type_tokens tok
         if a.is_i?
             num = a.to_i
 
-            if num >= $INT_LIMIT
+            if num >= $INT_LIMIT and $INT_LIMIT > -1
                 puts ("\nWARNING: integer " + a + ' exceeds maximum size of ' +
                     ($INT_LIMIT - 1).to_s + ', it will be interpreted as ' +
                     (num % $INT_LIMIT).to_s)
                 puts ''
             end
 
-            types.push a.to_i % $INT_LIMIT
+            # An integer limit of -1 is infinity
+            if $INT_LIMIT > -1
+                types.push a.to_i % $INT_LIMIT
+            else
+                types.push a.to_i
+            end
         elsif (a.start_with? ?" and a.end_with? ?") or (a.start_with? ?' and a.end_with? ?')
             ch = a[1...-1]
             ch = eval('"' + ch + '"') if ch.include? '\\'
@@ -469,8 +474,8 @@ def compile tok, in_global_scope: true
         if tok.size == 3
             var_size = tok[2]
 
-            if !(Integer === var_size)
-                error 'invalid size "' + var_size + '" for variable declaration'
+            if !(Integer === var_size) or var_size <= 0
+                error 'invalid size "' + var_size.to_s + '" for variable declaration'
             end
 
             var_size = var_size.to_i
@@ -1179,31 +1184,161 @@ def compile_file_code code, fname: '<string>'
     compiled
 end
 
-def post_process code
-    clean_code = ''
+def fix_adjacent_characters code
+    processed = ''
     slides = 0
+    pms = 0
 
     code.chars.each do |char|
-        if char == '+' or char == '-' or char == ',' or char == '.' or char == '[' or char == ']'
+        # TODO:
+        # Fix adjacent +- characters
+
+        if '+-'.chars.include? char
             if slides > 0
-                clean_code += '>' * slides
+                processed += '>' * slides
             elsif slides < 0
-                clean_code += '<' * -slides
+                processed += '<' * -slides
             end
 
             slides = 0
-            clean_code += char
-        elsif char == '>'
-            slides += 1
-        elsif char == '<'
-            slides -= 1
+
+            if char == '+'
+                pms += 1
+            elsif char == '-'
+                pms -= 1
+            end
+
+        elsif '><'.chars.include? char
+            if pms > 0
+                processed += '+' * pms
+            elsif pms < 0
+                processed += '-' * -pms
+            end
+
+            pms = 0
+
+            if char == '>'
+                slides += 1
+            elsif char == '<'
+                slides -= 1
+            end
+        end
+
+        if ',.[]'.chars.include? char
+            if slides > 0
+                processed += '>' * slides
+            elsif slides < 0
+                processed += '<' * -slides
+            end
+
+            if pms > 0
+                processed += '+' * pms
+            elsif pms < 0
+                processed += '-' * -pms
+            end
+
+            slides = 0
+            pms = 0
+            processed += char
         end
     end
 
+    processed
+end
+
+def remove_unnecessary_loops code
+    # 30,000 cells should be enough for a while at least
+    mem_size = 30000
+    cell_map = [0] * mem_size # Modified cells are 1's
+    ptr = 0
+
+    clip_scope = 0
+    processed = ''
+    last_char = ''
+    comment = false
+
+    code.chars.each do |char|
+        if char == '+'
+            cell_map[ptr] = 1
+        elsif char == '-'
+            cell_map[ptr] = 1
+        elsif char == '>'
+            ptr += 1
+        elsif char == '<'
+            ptr -= 1
+        elsif char == ','
+            cell_map[ptr] = 1
+        elsif char == ']' # After a loop finishes, whether it was really
+                          # activated or not, the current cell must be 0
+            # cell_map[ptr] = 0
+        end
+
+        if char == '['
+            clip_scope += 1 if cell_map[ptr] == 0
+            comment = last_char == ']'
+        end
+
+        # Only append characters that are necessary
+        processed += char if clip_scope <= 0 and !comment
+
+        # if clip_scope > 0
+        #     cell_map[ptr] = 0
+        # end
+
+        if char == ']'
+            clip_scope -= 1 if clip_scope > 0
+            comment = false
+        end
+
+        last_char = char
+    end
+
+    puts cell_map.to_s[...100]
+
+    processed
+end
+
+def post_process code
+    # For starters, strip any trailing characters that produce no output
+    no_output_chars = '+-><'.chars
+    while no_output_chars.include? code[-1]
+        code = code[...-1]
+    end
+
+    # Fix adjacent characters
+    code = fix_adjacent_characters code
+
+
+    # 'Remove' entire cells (NOT MADE YET)
+
+    # This works by figuring out which cells in the program are never modified
+    # or used in any way, and simply 'removes' them
+    # Any '>' or '<' characters that would normally cross over them can be
+    # shortened slightly because there will be a cell missing that they no
+    # longer need to cross
+
+    # To make this work, I need to implement a mini BF interpreter here that
+    # reacts a little differently to instructions (eg: no output, loops always
+    # activate, but only once)
+
+
+    # Remove unnecessary loops using a mini-interpreter
+    code = remove_unnecessary_loops code
+
+
+    # Fix adjacent characters (again)
+    processed = fix_adjacent_characters code
+
+    # Final substitutions
+    c = processed
+    c = c.gsub '[[-]]', '[-]'
+    processed = c
+
+    # Reshape the code
     reshaped_code = ''
     line_len = 0
 
-    clean_code.chars.each do |char|
+    processed.chars.each do |char|
         reshaped_code += char
 
         if (line_len += 1) >= $MAX_LINE_LENGTH
@@ -1212,7 +1347,7 @@ def post_process code
         end
     end
 
-    return reshaped_code
+    reshaped_code
 end
 
 if ARGV.size < 1
@@ -1220,8 +1355,22 @@ if ARGV.size < 1
 end
 
 # Maximum size for integers
-$INT_LIMIT = 256
-# $SEP = $/ # ''
+$INT_LIMIT = (ARGV.size > 2) ? ARGV[2].downcase : 256
+
+if $INT_LIMIT == 'char' or $INT_LIMIT == 'byte'
+    $INT_LIMIT = 2 ** 8
+elsif $INT_LIMIT == 'short'
+    $INT_LIMIT = 2 ** 16
+elsif $INT_LIMIT == 'int' or $INT_LIMIT == 'integer'
+    $INT_LIMIT = 2 ** 32
+elsif $INT_LIMIT == 'long'
+    $INT_LIMIT = 2 ** 64
+elsif $INT_LIMIT == 'stupid'
+    $INT_LIMIT = 2 ** 128
+elsif $INT_LIMIT == 'inf' or $INT_LIMIT == 'infinity' or $INT_LIMIT == 'infinite'
+    $INT_LIMIT = -1
+end
+
 $MAX_LINE_LENGTH = 80
 
 $bin_opers = '+-*/%&|^><'.chars + [

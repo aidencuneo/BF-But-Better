@@ -1,12 +1,13 @@
-include standard
 <> include math
 
-dec array 128
-ARRAY_SIZE = 128
+dec array 8
+ARRAY_SIZE = 8
 
 for i = 0; i < ARRAY_SIZE; ++i {
     (&array) + i := i + 1
 }
+
+include standard
 
 for i = 0; i < ARRAY_SIZE; ++i {
     r0 = (*((&array) + i))

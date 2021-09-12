@@ -4,303 +4,11 @@ int main() {
     unsigned int ptr = 0;
     unsigned char mem[30000] = {0};
 
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    ptr += 3;
-    mem[ptr] = 0;
-    mem[ptr] = 0;
-    ptr += 1;
-    mem[ptr] = 1;
-    mem[ptr] += 11;
-
-    while (mem[ptr]) {
-        ptr -= 1;
-        mem[ptr] += 10;
-        ptr += 1;
-        mem[ptr] -= 1;
-    }
-
-    ptr -= 1;
+    ptr += 24;
     mem[ptr] += 8;
-    ptr += 3;
+    ptr += 4;
     mem[ptr] = 0;
-    mem[ptr] = 0;
-    ptr += 1;
-    mem[ptr] = 0;
-    ptr += 2;
-    mem[ptr] = 0;
-    ptr -= 2;
-    mem[ptr] = 0;
-    ptr += 1;
-    mem[ptr] = 0;
-    ptr -= 2;
+    ptr -= 1;
 
     while (mem[ptr]) {
         mem[ptr] -= 1;
@@ -329,13 +37,9 @@ int main() {
         ptr -= 2;
     }
 
-    ptr += 5;
+    ptr -= 3;
     mem[ptr] = 0;
-    ptr -= 8;
-    mem[ptr] = 0;
-    ptr += 1;
-    mem[ptr] = 0;
-    ptr -= 2;
+    ptr -= 1;
 
     while (mem[ptr]) {
         mem[ptr] -= 1;
@@ -518,10 +222,8 @@ int main() {
             ptr += 3;
         }
 
-        mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 1;
-        mem[ptr] += 12;
 
         while (mem[ptr]) {
             ptr -= 1;
@@ -530,17 +232,7 @@ int main() {
             mem[ptr] -= 1;
         }
 
-        ptr -= 1;
-        mem[ptr] += 7;
-        ptr += 3;
-        mem[ptr] = 0;
-        ptr += 1;
-        mem[ptr] = 0;
-        ptr -= 1;
-        mem[ptr] += 7;
-        ptr += 3;
-        mem[ptr] = 0;
-        ptr -= 11;
+        ptr -= 6;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -717,7 +409,6 @@ int main() {
 
         ptr -= 2;
         mem[ptr] = 0;
-        mem[ptr] = 0;
         ptr -= 2;
         mem[ptr] = 0;
         ptr += 1;
@@ -776,7 +467,6 @@ int main() {
             ptr += 3;
         }
 
-        mem[ptr] = 0;
         ptr -= 2;
         mem[ptr] = 0;
         ptr += 1;
@@ -812,11 +502,7 @@ int main() {
 
         ptr += 5;
         mem[ptr] = 0;
-        ptr -= 8;
-        mem[ptr] = 0;
-        ptr += 1;
-        mem[ptr] = 0;
-        ptr -= 2;
+        ptr -= 9;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
@@ -951,58 +637,26 @@ int main() {
         ptr -= 3;
     }
 
-    mem[ptr] = 0;
-    mem[ptr] = 0;
-    ptr += 1;
-    mem[ptr] = 0;
-    ptr -= 4;
+    ptr += 3;
     mem[ptr] = 0;
     ptr += 3;
+    mem[ptr] = 0;
+    ptr += 3;
+    mem[ptr] = 0;
+    ptr += 3;
+    mem[ptr] = 0;
+    ptr -= 15;
+    mem[ptr] = 0;
+    ptr += 24;
 
     while (mem[ptr]) {
         mem[ptr] -= 1;
-        ptr -= 3;
+        ptr -= 24;
         mem[ptr] += 1;
-        ptr += 3;
+        ptr += 24;
     }
 
-    mem[ptr] = 0;
-    ptr -= 2;
-    mem[ptr] = 0;
-    ptr += 1;
-    mem[ptr] = 0;
-    ptr -= 2;
-
-    while (mem[ptr]) {
-        mem[ptr] -= 1;
-        ptr += 1;
-        mem[ptr] += 1;
-        ptr += 1;
-        mem[ptr] += 1;
-        ptr -= 2;
-    }
-
-    ptr += 2;
-
-    while (mem[ptr]) {
-        ptr -= 2;
-        mem[ptr] += 1;
-        ptr += 2;
-        mem[ptr] -= 1;
-    }
-
-    ptr -= 1;
-
-    while (mem[ptr]) {
-        mem[ptr] -= 1;
-        ptr += 2;
-        mem[ptr] += 1;
-        ptr -= 2;
-    }
-
-    ptr += 5;
-    mem[ptr] = 0;
-    ptr -= 8;
+    ptr -= 23;
     mem[ptr] = 0;
     ptr += 1;
     mem[ptr] = 0;
@@ -1030,12 +684,45 @@ int main() {
 
     while (mem[ptr]) {
         mem[ptr] -= 1;
-        ptr += 8;
+        ptr += 23;
         mem[ptr] += 1;
-        ptr -= 8;
+        ptr -= 23;
     }
 
-    ptr += 8;
+    ptr -= 3;
+    mem[ptr] = 0;
+    ptr += 1;
+    mem[ptr] = 0;
+    ptr -= 2;
+
+    while (mem[ptr]) {
+        mem[ptr] -= 1;
+        ptr += 1;
+        mem[ptr] += 1;
+        ptr += 1;
+        mem[ptr] += 1;
+        ptr -= 2;
+    }
+
+    ptr += 2;
+
+    while (mem[ptr]) {
+        ptr -= 2;
+        mem[ptr] += 1;
+        ptr += 2;
+        mem[ptr] -= 1;
+    }
+
+    ptr -= 1;
+
+    while (mem[ptr]) {
+        mem[ptr] -= 1;
+        ptr += 29;
+        mem[ptr] += 1;
+        ptr -= 29;
+    }
+
+    ptr += 29;
     mem[ptr] += 1;
     ptr -= 3;
     mem[ptr] += 1;
@@ -1146,7 +833,6 @@ int main() {
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 1;
-        mem[ptr] += 12;
 
         while (mem[ptr]) {
             ptr -= 1;
@@ -1157,15 +843,7 @@ int main() {
 
         ptr -= 1;
         mem[ptr] += 7;
-        ptr += 3;
-        mem[ptr] = 0;
-        ptr += 1;
-        mem[ptr] = 0;
-        ptr -= 1;
-        mem[ptr] += 7;
-        ptr += 3;
-        mem[ptr] = 0;
-        ptr -= 11;
+        ptr -= 26;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -1193,12 +871,12 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 11;
+            ptr += 32;
             mem[ptr] += 1;
-            ptr -= 11;
+            ptr -= 32;
         }
 
-        ptr += 11;
+        ptr += 32;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
@@ -1359,19 +1037,17 @@ int main() {
             ptr += 2;
         }
 
-        ptr -= 413;
+        ptr -= 23;
         mem[ptr] = 0;
-        ptr += 411;
+        ptr += 21;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr -= 411;
+            ptr -= 21;
             mem[ptr] += 1;
-            ptr += 411;
+            ptr += 21;
         }
 
-        mem[ptr] = 0;
-        mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 1;
 
@@ -1382,34 +1058,31 @@ int main() {
             mem[ptr] -= 1;
         }
 
-        ptr -= 409;
+        ptr -= 19;
         mem[ptr] = 0;
-        ptr += 408;
+        ptr += 18;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr -= 408;
+            ptr -= 18;
             mem[ptr] += 1;
-            ptr += 408;
+            ptr += 18;
         }
 
-        mem[ptr] = 0;
-        mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
-        ptr -= 406;
+        ptr -= 16;
         mem[ptr] = 0;
-        ptr += 405;
+        ptr += 15;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr -= 405;
+            ptr -= 15;
             mem[ptr] += 1;
-            ptr += 405;
+            ptr += 15;
         }
 
-        mem[ptr] = 0;
-        ptr -= 410;
+        ptr -= 20;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -1437,14 +1110,14 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 410;
+            ptr += 20;
             mem[ptr] += 1;
-            ptr -= 410;
+            ptr -= 20;
         }
 
-        ptr += 413;
+        ptr += 23;
         mem[ptr] = 0;
-        ptr -= 410;
+        ptr -= 20;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -1472,12 +1145,12 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 410;
+            ptr += 20;
             mem[ptr] += 1;
-            ptr -= 410;
+            ptr -= 20;
         }
 
-        ptr += 410;
+        ptr += 20;
         mem[ptr] += 1;
         ptr -= 3;
         mem[ptr] += 1;
@@ -1595,8 +1268,7 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] = 0;
-            mem[ptr] = 0;
-            ptr -= 404;
+            ptr -= 14;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -1624,12 +1296,12 @@ int main() {
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr += 404;
+                ptr += 14;
                 mem[ptr] += 1;
-                ptr -= 404;
+                ptr -= 14;
             }
 
-            ptr += 407;
+            ptr += 17;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -1643,20 +1315,18 @@ int main() {
                 ptr += 3;
             }
 
-            ptr -= 408;
+            ptr -= 18;
             mem[ptr] = 0;
-            ptr += 405;
+            ptr += 15;
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr -= 405;
+                ptr -= 15;
                 mem[ptr] += 1;
-                ptr += 405;
+                ptr += 15;
             }
 
-            mem[ptr] = 0;
-            mem[ptr] = 0;
-            ptr -= 410;
+            ptr -= 20;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -1684,14 +1354,14 @@ int main() {
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr += 410;
+                ptr += 20;
                 mem[ptr] += 1;
-                ptr -= 410;
+                ptr -= 20;
             }
 
-            ptr += 413;
+            ptr += 23;
             mem[ptr] = 0;
-            ptr -= 410;
+            ptr -= 20;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -1719,12 +1389,12 @@ int main() {
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr += 410;
+                ptr += 20;
                 mem[ptr] += 1;
-                ptr -= 410;
+                ptr -= 20;
             }
 
-            ptr += 410;
+            ptr += 20;
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
@@ -1733,54 +1403,18 @@ int main() {
                 ptr += 3;
             }
 
-            ptr -= 414;
+            ptr -= 24;
             mem[ptr] = 0;
-            ptr += 411;
+            ptr += 21;
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr -= 411;
+                ptr -= 21;
                 mem[ptr] += 1;
-                ptr += 411;
+                ptr += 21;
             }
 
-            mem[ptr] = 0;
-            ptr -= 410;
-            mem[ptr] = 0;
-            ptr += 1;
-            mem[ptr] = 0;
-            ptr -= 2;
-
-            while (mem[ptr]) {
-                mem[ptr] -= 1;
-                ptr += 1;
-                mem[ptr] += 1;
-                ptr += 1;
-                mem[ptr] += 1;
-                ptr -= 2;
-            }
-
-            ptr += 2;
-
-            while (mem[ptr]) {
-                ptr -= 2;
-                mem[ptr] += 1;
-                ptr += 2;
-                mem[ptr] -= 1;
-            }
-
-            ptr -= 1;
-
-            while (mem[ptr]) {
-                mem[ptr] -= 1;
-                ptr += 410;
-                mem[ptr] += 1;
-                ptr -= 410;
-            }
-
-            ptr += 413;
-            mem[ptr] = 0;
-            ptr -= 410;
+            ptr -= 20;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -1808,12 +1442,47 @@ int main() {
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr += 410;
+                ptr += 20;
                 mem[ptr] += 1;
-                ptr -= 410;
+                ptr -= 20;
             }
 
-            ptr += 410;
+            ptr += 23;
+            mem[ptr] = 0;
+            ptr -= 20;
+            mem[ptr] = 0;
+            ptr += 1;
+            mem[ptr] = 0;
+            ptr -= 2;
+
+            while (mem[ptr]) {
+                mem[ptr] -= 1;
+                ptr += 1;
+                mem[ptr] += 1;
+                ptr += 1;
+                mem[ptr] += 1;
+                ptr -= 2;
+            }
+
+            ptr += 2;
+
+            while (mem[ptr]) {
+                ptr -= 2;
+                mem[ptr] += 1;
+                ptr += 2;
+                mem[ptr] -= 1;
+            }
+
+            ptr -= 1;
+
+            while (mem[ptr]) {
+                mem[ptr] -= 1;
+                ptr += 20;
+                mem[ptr] += 1;
+                ptr -= 20;
+            }
+
+            ptr += 20;
             mem[ptr] += 1;
             ptr -= 3;
             mem[ptr] += 1;
@@ -1930,9 +1599,7 @@ int main() {
             ptr -= 1;
         }
 
-        mem[ptr] = 0;
-        mem[ptr] = 0;
-        ptr -= 410;
+        ptr -= 20;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -1960,25 +1627,23 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 410;
+            ptr += 20;
             mem[ptr] += 1;
-            ptr -= 410;
+            ptr -= 20;
         }
 
         ptr += 8;
         mem[ptr] = 0;
-        ptr += 402;
+        ptr += 12;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr -= 402;
+            ptr -= 12;
             mem[ptr] += 1;
-            ptr += 402;
+            ptr += 12;
         }
 
-        mem[ptr] = 0;
-        mem[ptr] = 0;
-        ptr -= 404;
+        ptr -= 14;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -2006,29 +1671,25 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 404;
+            ptr += 14;
             mem[ptr] += 1;
-            ptr -= 404;
+            ptr -= 14;
         }
 
         ptr -= 7;
         mem[ptr] = 0;
-        ptr += 411;
+        ptr += 21;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr -= 411;
+            ptr -= 21;
             mem[ptr] += 1;
-            ptr += 411;
+            ptr += 21;
         }
 
+        ptr -= 11;
         mem[ptr] = 0;
-        mem[ptr] = 0;
-        ptr -= 401;
-        mem[ptr] = 0;
-        ptr += 1;
-        mem[ptr] = 0;
-        ptr -= 2;
+        ptr -= 1;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
@@ -2052,39 +1713,36 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 401;
+            ptr += 11;
             mem[ptr] += 1;
-            ptr -= 401;
+            ptr -= 11;
         }
 
         ptr += 8;
         mem[ptr] = 0;
-        ptr += 393;
+        ptr += 3;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr -= 393;
+            ptr -= 3;
             mem[ptr] += 1;
-            ptr += 393;
+            ptr += 3;
         }
 
-        mem[ptr] = 0;
-        mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
-        ptr -= 406;
+        ptr -= 16;
         mem[ptr] = 0;
-        ptr += 405;
+        ptr += 15;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr -= 405;
+            ptr -= 15;
             mem[ptr] += 1;
-            ptr += 405;
+            ptr += 15;
         }
 
-        mem[ptr] = 0;
-        ptr -= 410;
+        ptr -= 20;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -2112,14 +1770,14 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 410;
+            ptr += 20;
             mem[ptr] += 1;
-            ptr -= 410;
+            ptr -= 20;
         }
 
-        ptr += 413;
+        ptr += 23;
         mem[ptr] = 0;
-        ptr -= 410;
+        ptr -= 20;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -2147,12 +1805,12 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 410;
+            ptr += 20;
             mem[ptr] += 1;
-            ptr -= 410;
+            ptr -= 20;
         }
 
-        ptr += 410;
+        ptr += 20;
         mem[ptr] += 1;
         ptr -= 3;
         mem[ptr] += 1;
@@ -2270,8 +1928,7 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] = 0;
-            mem[ptr] = 0;
-            ptr -= 404;
+            ptr -= 14;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -2299,12 +1956,12 @@ int main() {
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr += 404;
+                ptr += 14;
                 mem[ptr] += 1;
-                ptr -= 404;
+                ptr -= 14;
             }
 
-            ptr += 407;
+            ptr += 17;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -2318,20 +1975,18 @@ int main() {
                 ptr += 3;
             }
 
-            ptr -= 408;
+            ptr -= 18;
             mem[ptr] = 0;
-            ptr += 405;
+            ptr += 15;
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr -= 405;
+                ptr -= 15;
                 mem[ptr] += 1;
-                ptr += 405;
+                ptr += 15;
             }
 
-            mem[ptr] = 0;
-            mem[ptr] = 0;
-            ptr -= 410;
+            ptr -= 20;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -2359,14 +2014,14 @@ int main() {
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr += 410;
+                ptr += 20;
                 mem[ptr] += 1;
-                ptr -= 410;
+                ptr -= 20;
             }
 
-            ptr += 413;
+            ptr += 23;
             mem[ptr] = 0;
-            ptr -= 410;
+            ptr -= 20;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -2394,12 +2049,12 @@ int main() {
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr += 410;
+                ptr += 20;
                 mem[ptr] += 1;
-                ptr -= 410;
+                ptr -= 20;
             }
 
-            ptr += 410;
+            ptr += 20;
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
@@ -2408,54 +2063,18 @@ int main() {
                 ptr += 3;
             }
 
-            ptr -= 414;
+            ptr -= 24;
             mem[ptr] = 0;
-            ptr += 411;
+            ptr += 21;
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr -= 411;
+                ptr -= 21;
                 mem[ptr] += 1;
-                ptr += 411;
+                ptr += 21;
             }
 
-            mem[ptr] = 0;
-            ptr -= 410;
-            mem[ptr] = 0;
-            ptr += 1;
-            mem[ptr] = 0;
-            ptr -= 2;
-
-            while (mem[ptr]) {
-                mem[ptr] -= 1;
-                ptr += 1;
-                mem[ptr] += 1;
-                ptr += 1;
-                mem[ptr] += 1;
-                ptr -= 2;
-            }
-
-            ptr += 2;
-
-            while (mem[ptr]) {
-                ptr -= 2;
-                mem[ptr] += 1;
-                ptr += 2;
-                mem[ptr] -= 1;
-            }
-
-            ptr -= 1;
-
-            while (mem[ptr]) {
-                mem[ptr] -= 1;
-                ptr += 410;
-                mem[ptr] += 1;
-                ptr -= 410;
-            }
-
-            ptr += 413;
-            mem[ptr] = 0;
-            ptr -= 410;
+            ptr -= 20;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -2483,12 +2102,47 @@ int main() {
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr += 410;
+                ptr += 20;
                 mem[ptr] += 1;
-                ptr -= 410;
+                ptr -= 20;
             }
 
-            ptr += 410;
+            ptr += 23;
+            mem[ptr] = 0;
+            ptr -= 20;
+            mem[ptr] = 0;
+            ptr += 1;
+            mem[ptr] = 0;
+            ptr -= 2;
+
+            while (mem[ptr]) {
+                mem[ptr] -= 1;
+                ptr += 1;
+                mem[ptr] += 1;
+                ptr += 1;
+                mem[ptr] += 1;
+                ptr -= 2;
+            }
+
+            ptr += 2;
+
+            while (mem[ptr]) {
+                ptr -= 2;
+                mem[ptr] += 1;
+                ptr += 2;
+                mem[ptr] -= 1;
+            }
+
+            ptr -= 1;
+
+            while (mem[ptr]) {
+                mem[ptr] -= 1;
+                ptr += 20;
+                mem[ptr] += 1;
+                ptr -= 20;
+            }
+
+            ptr += 20;
             mem[ptr] += 1;
             ptr -= 3;
             mem[ptr] += 1;
@@ -2605,9 +2259,7 @@ int main() {
             ptr -= 1;
         }
 
-        mem[ptr] = 0;
-        mem[ptr] = 0;
-        ptr -= 410;
+        ptr -= 20;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -2635,25 +2287,23 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 410;
+            ptr += 20;
             mem[ptr] += 1;
-            ptr -= 410;
+            ptr -= 20;
         }
 
         ptr += 8;
         mem[ptr] = 0;
-        ptr += 402;
+        ptr += 12;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr -= 402;
+            ptr -= 12;
             mem[ptr] += 1;
-            ptr += 402;
+            ptr += 12;
         }
 
-        mem[ptr] = 0;
-        mem[ptr] = 0;
-        ptr -= 404;
+        ptr -= 14;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -2681,25 +2331,23 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 404;
+            ptr += 14;
             mem[ptr] += 1;
-            ptr -= 404;
+            ptr -= 14;
         }
 
         ptr -= 7;
         mem[ptr] = 0;
-        ptr += 411;
+        ptr += 21;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr -= 411;
+            ptr -= 21;
             mem[ptr] += 1;
-            ptr += 411;
+            ptr += 21;
         }
 
-        mem[ptr] = 0;
-        mem[ptr] = 0;
-        ptr -= 401;
+        ptr -= 11;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -2727,39 +2375,36 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 401;
+            ptr += 11;
             mem[ptr] += 1;
-            ptr -= 401;
+            ptr -= 11;
         }
 
         ptr += 5;
         mem[ptr] = 0;
-        ptr += 396;
+        ptr += 6;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr -= 396;
+            ptr -= 6;
             mem[ptr] += 1;
-            ptr += 396;
+            ptr += 6;
         }
 
-        mem[ptr] = 0;
-        mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
-        ptr -= 406;
+        ptr -= 16;
         mem[ptr] = 0;
-        ptr += 405;
+        ptr += 15;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr -= 405;
+            ptr -= 15;
             mem[ptr] += 1;
-            ptr += 405;
+            ptr += 15;
         }
 
-        mem[ptr] = 0;
-        ptr -= 410;
+        ptr -= 20;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -2787,14 +2432,14 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 410;
+            ptr += 20;
             mem[ptr] += 1;
-            ptr -= 410;
+            ptr -= 20;
         }
 
-        ptr += 413;
+        ptr += 23;
         mem[ptr] = 0;
-        ptr -= 410;
+        ptr -= 20;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -2822,12 +2467,12 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 410;
+            ptr += 20;
             mem[ptr] += 1;
-            ptr -= 410;
+            ptr -= 20;
         }
 
-        ptr += 410;
+        ptr += 20;
         mem[ptr] += 1;
         ptr -= 3;
         mem[ptr] += 1;
@@ -2945,8 +2590,7 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] = 0;
-            mem[ptr] = 0;
-            ptr -= 404;
+            ptr -= 14;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -2974,12 +2618,12 @@ int main() {
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr += 404;
+                ptr += 14;
                 mem[ptr] += 1;
-                ptr -= 404;
+                ptr -= 14;
             }
 
-            ptr += 407;
+            ptr += 17;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -2993,20 +2637,18 @@ int main() {
                 ptr += 3;
             }
 
-            ptr -= 408;
+            ptr -= 18;
             mem[ptr] = 0;
-            ptr += 405;
+            ptr += 15;
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr -= 405;
+                ptr -= 15;
                 mem[ptr] += 1;
-                ptr += 405;
+                ptr += 15;
             }
 
-            mem[ptr] = 0;
-            mem[ptr] = 0;
-            ptr -= 410;
+            ptr -= 20;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -3034,14 +2676,14 @@ int main() {
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr += 410;
+                ptr += 20;
                 mem[ptr] += 1;
-                ptr -= 410;
+                ptr -= 20;
             }
 
-            ptr += 413;
+            ptr += 23;
             mem[ptr] = 0;
-            ptr -= 410;
+            ptr -= 20;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -3069,12 +2711,12 @@ int main() {
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr += 410;
+                ptr += 20;
                 mem[ptr] += 1;
-                ptr -= 410;
+                ptr -= 20;
             }
 
-            ptr += 410;
+            ptr += 20;
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
@@ -3083,54 +2725,18 @@ int main() {
                 ptr += 3;
             }
 
-            ptr -= 414;
+            ptr -= 24;
             mem[ptr] = 0;
-            ptr += 411;
+            ptr += 21;
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr -= 411;
+                ptr -= 21;
                 mem[ptr] += 1;
-                ptr += 411;
+                ptr += 21;
             }
 
-            mem[ptr] = 0;
-            ptr -= 410;
-            mem[ptr] = 0;
-            ptr += 1;
-            mem[ptr] = 0;
-            ptr -= 2;
-
-            while (mem[ptr]) {
-                mem[ptr] -= 1;
-                ptr += 1;
-                mem[ptr] += 1;
-                ptr += 1;
-                mem[ptr] += 1;
-                ptr -= 2;
-            }
-
-            ptr += 2;
-
-            while (mem[ptr]) {
-                ptr -= 2;
-                mem[ptr] += 1;
-                ptr += 2;
-                mem[ptr] -= 1;
-            }
-
-            ptr -= 1;
-
-            while (mem[ptr]) {
-                mem[ptr] -= 1;
-                ptr += 410;
-                mem[ptr] += 1;
-                ptr -= 410;
-            }
-
-            ptr += 413;
-            mem[ptr] = 0;
-            ptr -= 410;
+            ptr -= 20;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -3158,12 +2764,47 @@ int main() {
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr += 410;
+                ptr += 20;
                 mem[ptr] += 1;
-                ptr -= 410;
+                ptr -= 20;
             }
 
-            ptr += 410;
+            ptr += 23;
+            mem[ptr] = 0;
+            ptr -= 20;
+            mem[ptr] = 0;
+            ptr += 1;
+            mem[ptr] = 0;
+            ptr -= 2;
+
+            while (mem[ptr]) {
+                mem[ptr] -= 1;
+                ptr += 1;
+                mem[ptr] += 1;
+                ptr += 1;
+                mem[ptr] += 1;
+                ptr -= 2;
+            }
+
+            ptr += 2;
+
+            while (mem[ptr]) {
+                ptr -= 2;
+                mem[ptr] += 1;
+                ptr += 2;
+                mem[ptr] -= 1;
+            }
+
+            ptr -= 1;
+
+            while (mem[ptr]) {
+                mem[ptr] -= 1;
+                ptr += 20;
+                mem[ptr] += 1;
+                ptr -= 20;
+            }
+
+            ptr += 20;
             mem[ptr] += 1;
             ptr -= 3;
             mem[ptr] += 1;
@@ -3280,9 +2921,7 @@ int main() {
             ptr -= 1;
         }
 
-        mem[ptr] = 0;
-        mem[ptr] = 0;
-        ptr -= 410;
+        ptr -= 20;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -3310,25 +2949,23 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 410;
+            ptr += 20;
             mem[ptr] += 1;
-            ptr -= 410;
+            ptr -= 20;
         }
 
         ptr += 8;
         mem[ptr] = 0;
-        ptr += 402;
+        ptr += 12;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr -= 402;
+            ptr -= 12;
             mem[ptr] += 1;
-            ptr += 402;
+            ptr += 12;
         }
 
-        mem[ptr] = 0;
-        mem[ptr] = 0;
-        ptr -= 404;
+        ptr -= 14;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -3356,25 +2993,23 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 404;
+            ptr += 14;
             mem[ptr] += 1;
-            ptr -= 404;
+            ptr -= 14;
         }
 
         ptr -= 7;
         mem[ptr] = 0;
-        ptr += 411;
+        ptr += 21;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr -= 411;
+            ptr -= 21;
             mem[ptr] += 1;
-            ptr += 411;
+            ptr += 21;
         }
 
-        mem[ptr] = 0;
-        mem[ptr] = 0;
-        ptr -= 401;
+        ptr -= 11;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -3402,28 +3037,23 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 401;
+            ptr += 11;
             mem[ptr] += 1;
-            ptr -= 401;
+            ptr -= 11;
         }
 
         ptr += 2;
         mem[ptr] = 0;
-        ptr += 399;
+        ptr += 9;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr -= 399;
+            ptr -= 9;
             mem[ptr] += 1;
-            ptr += 399;
+            ptr += 9;
         }
 
-        mem[ptr] = 0;
-        ptr -= 398;
-        mem[ptr] = 0;
-        ptr += 1;
-        mem[ptr] = 0;
-        ptr -= 2;
+        ptr -= 9;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
@@ -3447,12 +3077,12 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 398;
+            ptr += 8;
             mem[ptr] += 1;
-            ptr -= 398;
+            ptr -= 8;
         }
 
-        ptr += 398;
+        ptr += 8;
 
         while (mem[ptr]) {
             mem[ptr] = 0;
@@ -3471,7 +3101,7 @@ int main() {
             mem[ptr] += 8;
             ptr += 3;
             mem[ptr] = 0;
-            ptr -= 401;
+            ptr -= 11;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -3499,12 +3129,12 @@ int main() {
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr += 401;
+                ptr += 11;
                 mem[ptr] += 1;
-                ptr -= 401;
+                ptr -= 11;
             }
 
-            ptr += 401;
+            ptr += 11;
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
@@ -3518,43 +3148,7 @@ int main() {
             mem[ptr] = 0;
         }
 
-        mem[ptr] = 0;
-        ptr -= 398;
-        mem[ptr] = 0;
-        ptr += 1;
-        mem[ptr] = 0;
-        ptr -= 2;
-
-        while (mem[ptr]) {
-            mem[ptr] -= 1;
-            ptr += 1;
-            mem[ptr] += 1;
-            ptr += 1;
-            mem[ptr] += 1;
-            ptr -= 2;
-        }
-
-        ptr += 2;
-
-        while (mem[ptr]) {
-            ptr -= 2;
-            mem[ptr] += 1;
-            ptr += 2;
-            mem[ptr] -= 1;
-        }
-
-        ptr -= 1;
-
-        while (mem[ptr]) {
-            mem[ptr] -= 1;
-            ptr += 398;
-            mem[ptr] += 1;
-            ptr -= 398;
-        }
-
-        ptr += 401;
-        mem[ptr] = 0;
-        ptr -= 398;
+        ptr -= 8;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -3582,12 +3176,47 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 398;
+            ptr += 8;
             mem[ptr] += 1;
-            ptr -= 398;
+            ptr -= 8;
         }
 
-        ptr += 398;
+        ptr += 11;
+        mem[ptr] = 0;
+        ptr -= 8;
+        mem[ptr] = 0;
+        ptr += 1;
+        mem[ptr] = 0;
+        ptr -= 2;
+
+        while (mem[ptr]) {
+            mem[ptr] -= 1;
+            ptr += 1;
+            mem[ptr] += 1;
+            ptr += 1;
+            mem[ptr] += 1;
+            ptr -= 2;
+        }
+
+        ptr += 2;
+
+        while (mem[ptr]) {
+            ptr -= 2;
+            mem[ptr] += 1;
+            ptr += 2;
+            mem[ptr] -= 1;
+        }
+
+        ptr -= 1;
+
+        while (mem[ptr]) {
+            mem[ptr] -= 1;
+            ptr += 8;
+            mem[ptr] += 1;
+            ptr -= 8;
+        }
+
+        ptr += 8;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
@@ -3615,7 +3244,7 @@ int main() {
             mem[ptr] += 8;
             ptr += 3;
             mem[ptr] = 0;
-            ptr -= 398;
+            ptr -= 8;
             mem[ptr] = 0;
             ptr += 1;
             mem[ptr] = 0;
@@ -3643,12 +3272,12 @@ int main() {
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
-                ptr += 398;
+                ptr += 8;
                 mem[ptr] += 1;
-                ptr -= 398;
+                ptr -= 8;
             }
 
-            ptr += 398;
+            ptr += 8;
 
             while (mem[ptr]) {
                 mem[ptr] -= 1;
@@ -3662,7 +3291,6 @@ int main() {
             mem[ptr] = 0;
         }
 
-        mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 1;
         mem[ptr] += 3;
@@ -3678,7 +3306,7 @@ int main() {
         mem[ptr] += 8;
         ptr += 3;
         mem[ptr] = 0;
-        ptr -= 395;
+        ptr -= 5;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -3706,12 +3334,12 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 395;
+            ptr += 5;
             mem[ptr] += 1;
-            ptr -= 395;
+            ptr -= 5;
         }
 
-        ptr += 395;
+        ptr += 5;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
@@ -3736,8 +3364,7 @@ int main() {
         ptr -= 1;
         printf("%c", mem[ptr]);
         mem[ptr] = 0;
-        mem[ptr] = 0;
-        ptr -= 2;
+        ptr -= 23;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -3765,12 +3392,12 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 2;
+            ptr += 23;
             mem[ptr] += 1;
-            ptr -= 2;
+            ptr -= 23;
         }
 
-        ptr += 5;
+        ptr += 26;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -3784,54 +3411,18 @@ int main() {
             ptr += 3;
         }
 
-        ptr -= 6;
+        ptr -= 27;
         mem[ptr] = 0;
-        ptr += 3;
+        ptr += 24;
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr -= 3;
+            ptr -= 24;
             mem[ptr] += 1;
-            ptr += 3;
+            ptr += 24;
         }
 
-        mem[ptr] = 0;
-        ptr -= 2;
-        mem[ptr] = 0;
-        ptr += 1;
-        mem[ptr] = 0;
-        ptr -= 2;
-
-        while (mem[ptr]) {
-            mem[ptr] -= 1;
-            ptr += 1;
-            mem[ptr] += 1;
-            ptr += 1;
-            mem[ptr] += 1;
-            ptr -= 2;
-        }
-
-        ptr += 2;
-
-        while (mem[ptr]) {
-            ptr -= 2;
-            mem[ptr] += 1;
-            ptr += 2;
-            mem[ptr] -= 1;
-        }
-
-        ptr -= 1;
-
-        while (mem[ptr]) {
-            mem[ptr] -= 1;
-            ptr += 2;
-            mem[ptr] += 1;
-            ptr -= 2;
-        }
-
-        ptr += 5;
-        mem[ptr] = 0;
-        ptr -= 8;
+        ptr -= 23;
         mem[ptr] = 0;
         ptr += 1;
         mem[ptr] = 0;
@@ -3859,12 +3450,47 @@ int main() {
 
         while (mem[ptr]) {
             mem[ptr] -= 1;
-            ptr += 8;
+            ptr += 23;
             mem[ptr] += 1;
-            ptr -= 8;
+            ptr -= 23;
         }
 
-        ptr += 8;
+        ptr += 26;
+        mem[ptr] = 0;
+        ptr -= 29;
+        mem[ptr] = 0;
+        ptr += 1;
+        mem[ptr] = 0;
+        ptr -= 2;
+
+        while (mem[ptr]) {
+            mem[ptr] -= 1;
+            ptr += 1;
+            mem[ptr] += 1;
+            ptr += 1;
+            mem[ptr] += 1;
+            ptr -= 2;
+        }
+
+        ptr += 2;
+
+        while (mem[ptr]) {
+            ptr -= 2;
+            mem[ptr] += 1;
+            ptr += 2;
+            mem[ptr] -= 1;
+        }
+
+        ptr -= 1;
+
+        while (mem[ptr]) {
+            mem[ptr] -= 1;
+            ptr += 29;
+            mem[ptr] += 1;
+            ptr -= 29;
+        }
+
+        ptr += 29;
         mem[ptr] += 1;
         ptr -= 3;
         mem[ptr] += 1;

@@ -1,11 +1,8 @@
-o = '''
-#include <stdio.h>
-
-int main() {
-    unsigned int ptr = 0;
-    unsigned char mem[30000] = {0};
-
-'''.lstrip
+class String
+    def is_i?
+        /\A[-+]?\d+\z/ === self
+    end
+end
 
 # Pre-processing
 $fname = ARGV.first
@@ -22,6 +19,37 @@ $code = $code.gsub '[-]+', '1'
 $code = $code.gsub '[+]+', '1'
 $code = $code.gsub '[-]', '0'
 $code = $code.gsub '[+]', '0'
+
+# Use this to change the size of each cell
+# (by default this is char, but that can make things a little awkward)
+$mem_type = (ARGV.size > 2) ? ARGV[2].downcase : 'char'
+$mem_type = $mem_type.to_i if $mem_type.is_i?
+
+if $mem_type == 2 ** 8 or $mem_type == 'byte'
+    $mem_type = 'char'
+elsif $mem_type == 2 ** 16
+    $mem_type = 'short'
+elsif $mem_type == 2 ** 32 or $mem_type == 'integer'
+    $mem_type = 'int'
+elsif $mem_type == 2 ** 64
+    $mem_type = 'long'
+elsif $mem_type == 2 ** 128 or $mem_type == 'stupid' or $mem_type == 'inf' or $mem_type == 'infinity' or $mem_type == 'infinite'
+    $mem_type = 'long long'
+elsif Integer === $mem_type
+    $mem_type = 'char'
+# Otherwise, try to use the datatype that the person specified, and if it
+# doesn't work, they probably typed it wrong
+end
+
+# Output code
+o = """
+#include <stdio.h>
+
+int main() {
+    unsigned int ptr = 0;
+    unsigned #$mem_type mem[30000] = {0};
+
+""".lstrip
 
 # Compilation
 adds = 0

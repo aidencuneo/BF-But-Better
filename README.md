@@ -15,3 +15,31 @@ code and BFB code, respectively. `.c` files are the same, they contain C code.
 computer can understand (the same goes for `.exe` if there are any of those in
 here). But not every computer. More specifically, the computer you compiled
 it on.
+
+## Getting started
+Before you even begin to program in this language, it is so so so important
+that you declare your variables in order of size (as in, big ones first,
+medium ones next, smallest ones last). Arrays count as big variables, so
+declare them first.
+
+Now that we've gotten that out of the way, you can begin programming. Go ahead
+and make yourself a file in the `examples` folder, or just anywhere in this
+area. Let's start with the "Hello, World!" of BFB. Try putting the following
+code in your new file:
+
+```
+println 'Hello, World!'
+```
+
+Easy! You can compile this code with `./comp.sh <filename>` (sorry Windows
+users, I'll make a batch file for you guys soon). Also, you can pass an
+optional argument to the `comp.sh` script which changes the size of your
+integers. This affects both the BFB and BF compilation. You can just give it
+any number or some kind of datatype that it understands and it'll make that
+the new size of your integers. For example, compile with
+`./comp.sh <filename> short` to have integers up to but not including 65,536.
+Similarly, you can use `./comp.sh <filename> 700` to have integers up to
+but not including 700 (that's oddly specific and will almost definitely not
+work as intended, but you get the point). I would recommend sticking to
+datatypes such as char, int, long, etc, otherwise the BF compiler may have a
+little trouble figuring out how to make things specific for you.
