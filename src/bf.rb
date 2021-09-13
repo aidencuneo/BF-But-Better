@@ -2,6 +2,15 @@ class String
     def is_i?
         /\A[-+]?\d+\z/ === self
     end
+
+    def rstrip s
+        n = self
+        while s.chars.include? n[-1]
+            n = n[...-1]
+        end
+
+        n
+    end
 end
 
 # Pre-processing
@@ -15,6 +24,7 @@ $raw.each do |ch|
 end
 
 # Code shortening (for **performance**)
+$code = $code.rstrip '+-><[]' # This is explained somewhere (it has a purpose)
 $code = $code.gsub '[-]+', '1'
 $code = $code.gsub '[+]+', '1'
 $code = $code.gsub '[-]', '0'

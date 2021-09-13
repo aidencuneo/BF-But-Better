@@ -2,6 +2,15 @@ class String
     def is_i?
         /\A[-+]?\d+\z/ === self
     end
+
+    def rstrip s
+        n = self
+        while s.chars.include? n[-1]
+            n = n[...-1]
+        end
+
+        n
+    end
 end
 
 def lpad s, pad_len, pad_char
@@ -1300,10 +1309,7 @@ end
 
 def post_process code
     # For starters, strip any trailing characters that produce no output
-    no_output_chars = '+-><'.chars
-    while no_output_chars.include? code[-1]
-        code = code[...-1]
-    end
+    code = code.rstrip '+-><[]'
 
     # Fix adjacent characters
     code = fix_adjacent_characters code

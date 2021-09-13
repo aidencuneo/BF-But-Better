@@ -2,10 +2,22 @@ class String
     def is_i?
         /\A[-+]?\d+\z/ === self
     end
+
+    def rstrip s
+        n = self
+        while s.chars.include? n[-1]
+            n = n[...-1]
+        end
+
+        n
+    end
 end
 
 
 def gen_insts code
+    # Anything that doesn't produce output should be stripped from the end
+    code = code.rstrip '+-><[]'
+
     insts = []
     adds = 0
     subs = 0
@@ -66,7 +78,7 @@ def to_exact insts
         type = inst[0]
         count = inst[1]
 
-        if pos < 0
+        if pos < 0 and $RAISE_ERRORS
             abort (
                 'Error: memory pointer can not be negative (your code ' +
                 'might have too many "<" characters)'
@@ -163,6 +175,8 @@ def find_best_cell_map insts
     stripped = keep insts, '='
     best_size = (gen_code to_relative stripped).size
 
+    puts 'Best cell map size: ' + best_size.to_s
+
     # First, find the current cell map being used, along with its size
     i = 0
     while i < insts.size
@@ -209,12 +223,13 @@ end
 
 
 # Settings
-$ITERATIONS = (ARGV.size > 2) ? ARGV[2].to_i : 1000
-$MAX_LINE_LENGTH = (ARGV.size > 3) ? ARGV[3].to_i : -1
+$ITERATIONS = (ARGV.size > 1) ? ARGV[1].to_i : 1000
+$MAX_LINE_LENGTH = (ARGV.size > 2) ? ARGV[2].to_i : -1
+$RAISE_ERRORS = false # Should I raise errors or trust the user instead?
 
 # Pre-processing
 $fname = ARGV.first
-$out_file = (ARGV.size > 1) ? ARGV[1] : '_out_compressed.bf'
+$out_file = (ARGV.size > 3) ? ARGV[3] : '_out_compressed.bf'
 $raw = File.read($fname).chars
 $code = ''
 

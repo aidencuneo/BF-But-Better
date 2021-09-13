@@ -1,15 +1,14 @@
+include standard
 <> include math
 
-dec array 8
-ARRAY_SIZE = 8
+dec array 128
+ARRAY_SIZE = 128
 
 for i = 0; i < ARRAY_SIZE; ++i {
     (&array) + i := i + 1
 }
 
-include standard
-
-for i = 0; i < ARRAY_SIZE; ++i {
+for i = ARRAY_SIZE - 1; i >= 0; --i {
     r0 = (*((&array) + i))
     call printnum
     print '\n'

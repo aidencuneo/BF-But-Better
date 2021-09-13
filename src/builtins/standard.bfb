@@ -4,9 +4,7 @@ dec r1
 dec R0
 dec R1
 
-dec _printnum_digit1
-dec _printnum_digit2
-dec _printnum_digit3
+dec _printnum_digits 
 
 <> Divide
 sub / {

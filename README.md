@@ -17,11 +17,20 @@ here). But not every computer. More specifically, the computer you compiled
 it on.
 
 ## Getting started
-Before you even begin to program in this language, it is so so so important
+
+### A Quick Note
+Before you even begin to program in this language, I HIGHLY RECOMMEND
 that you declare your variables in order of size (as in, big ones first,
 medium ones next, smallest ones last). Arrays count as big variables, so
-declare them first.
+declare them first. However, you can ignore this request and code however you
+want to, but after you do so, you will probably want to run your code through
+`src/experimental/cell_map_compressor.rb` to cut down your code size. For
+example: `ruby src/experimental/cell_map_compressor.rb _out.bf 500 80`
+(where `500` is number of iterations and `80` is the line length in the
+output file). Optionally, you can append an output file to the end of that
+command: `... _out.bf 500 80 file.bf`.
 
+### Ok, seriously, getting started
 Now that we've gotten that out of the way, you can begin programming. Go ahead
 and make yourself a file in the `examples` folder, or just anywhere in this
 area. Let's start with the "Hello, World!" of BFB. Try putting the following
