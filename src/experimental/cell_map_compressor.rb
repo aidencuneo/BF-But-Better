@@ -14,9 +14,11 @@ class String
 end
 
 
-def gen_insts code
+def gen_insts code, do_strip: true
     # Anything that doesn't produce output should be stripped from the end
-    code = code.rstrip '+-><[]'
+    if do_strip
+        code = code.rstrip '+-><'
+    end
 
     insts = []
     adds = 0
@@ -225,7 +227,11 @@ end
 # Settings
 $ITERATIONS = (ARGV.size > 1) ? ARGV[1].to_i : 1000
 $MAX_LINE_LENGTH = (ARGV.size > 2) ? ARGV[2].to_i : -1
-$RAISE_ERRORS = false # Should I raise errors or trust the user instead?
+# Should I raise errors or trust the user instead?
+$RAISE_ERRORS = false
+# Should I strip away '+-><' characters from the end of the code?
+$STRIP_NON_OUTPUTTING_CHARS = true
+$CUSTOM_CELL_MAP = []
 
 # Pre-processing
 $fname = ARGV.first
@@ -248,12 +254,14 @@ exact = to_exact insts
 exact.insert 0, ['=', 0]
 
 # Find best cell map
-cell_map = find_best_cell_map exact
-puts cell_map.to_s
-
-# You can also define your own cell map if you want to, just make sure it's
-# the right size
-# cell_map = [4, 3, 2, 1, 0]
+if $CUSTOM_CELL_MAP.empty?
+    cell_map = find_best_cell_map exact
+    puts cell_map.to_s
+else
+    # You can define your own cell map if you want to, just make sure it's
+    # the right size
+    cell_map = $CUSTOM_CELL_MAP
+end
 
 # Write compressed code to output file
 code = gen_code to_relative(apply_cell_map exact, cell_map)

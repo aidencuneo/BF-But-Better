@@ -24,42 +24,113 @@ $raw.each do |ch|
 end
 
 # Code shortening (for **performance**)
-$code = $code.rstrip '+-><[]' # This is explained somewhere (it has a purpose)
-$code = $code.gsub '[-]+', '1'
-$code = $code.gsub '[+]+', '1'
+$code = $code.rstrip '+-><' # This is explained somewhere (it has a purpose)
+# $code = $code.gsub '[-]+', '1'
+# $code = $code.gsub '[+]+', '1'
 $code = $code.gsub '[-]', '0'
 $code = $code.gsub '[+]', '0'
 
+# Single cell copying
+scanned = $code.scan /(\[\-<+\+>+\])|(\[<+\+>+\-\])|(\[\->+\+<+\])|(\[>+\+<+\-\])/
+scanned.each do |scan|
+    if !scan[0].nil?
+        scan = scan[0]
+        sign = '-'
+    elsif !scan[1].nil?
+        scan = scan[1]
+        sign = '-'
+    elsif !scan[2].nil?
+        scan = scan[2]
+        sign = ''
+    elsif !scan[3].nil?
+        scan = scan[3]
+        sign = ''
+    end
+
+    left = scan.count '<'
+    right = scan.count '>'
+
+    if left != right
+        next
+    end
+
+    rep = "`p[#{sign}#{left}] += *p`0"
+    # Note the 0 at the end to clear the current cell
+
+    $code = $code.gsub scan, rep
+end
+
+# Double cell copying (doesn't work because of cases such as: [->+>>>>+<<<<<])
+# scanned = $code.scan /(\[\->+\+>+\+<+\])|(\[>+\+>+\+<+\-\])|(\[\-<+\+<+\+>+\])|(\[<+\+<+\+>+\-\])/
+# scanned.each do |scan|
+#     if !scan[0].nil?
+#         scan = scan[0]
+#         sign = ''
+#     elsif !scan[1].nil?
+#         scan = scan[1]
+#         sign = ''
+#     elsif !scan[2].nil?
+#         scan = scan[2]
+#         sign = '-'
+#     elsif !scan[3].nil?
+#         scan = scan[3]
+#         sign = '-'
+#     end
+
+#     left = scan.count '<'
+#     right = scan.count '>'
+
+#     if left != right
+#         next
+#     end
+
+#     rep = "`p[#{sign}#{left / 2}] += *p`"
+#     rep += "`p[#{sign}#{left}] += *p`"
+#     rep += '0'
+#     # Note that the 0 clears the current cell
+
+#     # puts scan.to_s
+#     # puts sign
+#     # puts left
+#     # puts rep
+#     # abort
+
+#     puts scan + ' -> ' + rep
+
+#     $code = $code.gsub scan, rep
+# end
+
 # Use this to change the size of each cell
 # (by default this is char, but that can make things a little awkward)
-$mem_type = (ARGV.size > 2) ? ARGV[2].downcase : 'char'
-$mem_type = $mem_type.to_i if $mem_type.is_i?
+$m_type = (ARGV.size > 2) ? ARGV[2].downcase : 'char'
+$m_type = $m_type.to_i if $m_type.is_i?
 
-if $mem_type == 2 ** 8 or $mem_type == 'byte'
-    $mem_type = 'char'
-elsif $mem_type == 2 ** 16
-    $mem_type = 'short'
-elsif $mem_type == 2 ** 32 or $mem_type == 'integer'
-    $mem_type = 'int'
-elsif $mem_type == 2 ** 64
-    $mem_type = 'long'
-elsif $mem_type == 2 ** 128 or $mem_type == 'stupid' or $mem_type == 'inf' or $mem_type == 'infinity' or $mem_type == 'infinite'
-    $mem_type = 'long long'
-elsif Integer === $mem_type
-    $mem_type = 'char'
+if $m_type == 2 ** 8 or $m_type == 'byte'
+    $m_type = 'char'
+elsif $m_type == 2 ** 16
+    $m_type = 'short'
+elsif $m_type == 2 ** 32 or $m_type == 'integer'
+    $m_type = 'int'
+elsif $m_type == 2 ** 64
+    $m_type = 'long'
+elsif $m_type == 2 ** 128 or $m_type == 'stupid' or $m_type == 'inf' or $m_type == 'infinity' or $m_type == 'infinite'
+    $m_type = 'long long'
+elsif Integer === $m_type
+    $m_type = 'char'
 # Otherwise, try to use the datatype that the person specified, and if it
 # doesn't work, they probably typed it wrong
 end
 
 # Output code
-o = """
+o = "
 #include <stdio.h>
 
 int main() {
-    unsigned int ptr = 0;
-    unsigned #$mem_type mem[30000] = {0};
+    unsigned char e = EOF;
+    unsigned #$m_type m[30000] = {0};
+    unsigned #$m_type * p = m;
 
-""".lstrip
+".lstrip
 
 # Compilation
 adds = 0
@@ -67,62 +138,77 @@ subs = 0
 rslides = 0
 lslides = 0
 calling = false
+inline = false
 scope = 1
 
 $code.chars.each do |a|
     if a != ?+ and adds > 0
-        o += '    ' * scope + 'mem[ptr] += ' + adds.to_s + ";\n"
-        # o += '    ' * scope + "$mem[$ptr] = 256 + $mem[$ptr] if $mem[$ptr] < 0\n"
-        # o += '    ' * scope + "$mem[$ptr] %= 256\n"
+        o += '    ' * scope + '*p += ' + adds.to_s + ";\n"
+        # o += '    ' * scope + "$m[$p] = 256 + $m[$p] if $m[$p] < 0\n"
+        # o += '    ' * scope + "$m[$p] %= 256\n"
         adds = 0
     elsif a != ?- and subs > 0
-        o += '    ' * scope + 'mem[ptr] -= ' + subs.to_s + ";\n"
-        # o += '    ' * scope + "if (mem[ptr] < 0) mem[ptr] = 256 + mem[ptr];\n"
-        # o += '    ' * scope + "$mem[$ptr] %= 256\n"
+        o += '    ' * scope + '*p -= ' + subs.to_s + ";\n"
+        # o += '    ' * scope + "if (m[p] < 0) m[p] = 256 + m[p];\n"
+        # o += '    ' * scope + "$m[$p] %= 256\n"
         subs = 0
     elsif a != ?> and rslides > 0
-        o += '    ' * scope + 'ptr += ' + rslides.to_s + ";\n"
+        o += '    ' * scope + 'p += ' + rslides.to_s + ";\n"
         rslides = 0
     elsif a != ?< and lslides > 0
-        o += '    ' * scope + 'ptr -= ' + lslides.to_s + ";\n"
+        o += '    ' * scope + 'p -= ' + lslides.to_s + ";\n"
         lslides = 0
     end
 
-    if a == ?[
+    if a == ?`
+        inline = !inline
+
+        if inline
+            o += '    ' * scope
+        else
+            o += ";\n"
+        end
+    elsif inline
+        o += a
+    elsif a == ?+
+        adds += 1
+    elsif a == ?-
+        subs += 1
+    elsif a == ?>
+        rslides += 1
+    elsif a == ?<
+        lslides += 1
+    elsif a == ?[
         o += "\n"
-        o += '    ' * scope + "while (mem[ptr]) {\n"
+        o += '    ' * scope + "while (*p) {\n"
         scope += 1
-    elsif a == ?{
+    elsif a == ?(
         o += "\n"
-        o += '    ' * scope + "if (mem[ptr]) {\n"
+        o += '    ' * scope + "if (*p) {\n"
         scope += 1
-    elsif a == ?] or a == ?} or a == ?;
+    elsif a == ?] or a == ?)
         scope -= 1
         o += '    ' * scope + "}\n\n"
     elsif a == ?,
-        o += '    ' * scope + "mem[ptr] = getchar();\n"
+        o += '    ' * scope + "*p = getchar();\n"
+        o += '    ' * scope + "if ((unsigned char)(*p) == e) *p = 0;\n"
     elsif a == ?.
-        o += '    ' * scope + "printf(\"%c\", mem[ptr]);\n"
+        o += '    ' * scope + "printf(\"%c\", *p);\n"
     elsif a == ?~
-        o += '    ' * scope + "if (mem[ptr]) mem[ptr] = 0; else mem[ptr] = 1;\n"
+        o += '    ' * scope + "if (*p) *p = 0; else *p = 1;\n"
     elsif a == ?0
-        o += '    ' * scope + "mem[ptr] = 0;\n"
+        o += '    ' * scope + "*p = 0;\n"
     elsif a == ?1
-        o += '    ' * scope + "mem[ptr] = 1;\n"
+        o += '    ' * scope + "*p = 1;\n"
     end
 
-    adds += 1 if a == ?+
-    subs += 1 if a == ?-
-    rslides += 1 if a == ?>
-    lslides += 1 if a == ?<
+    # if calling
+    #     o += '    ' * scope + a + "();\n" if (?a..?z) === a
+    # else
+    #     o += '    ' * scope + 'int ' + a + "() {\n" if (?a..?z) === a
+    # end
 
-    if calling
-        o += '    ' * scope + a + "();\n" if (?a..?z) === a
-    else
-        o += '    ' * scope + 'int ' + a + "() {\n" if (?a..?z) === a
-    end
-
-    calling = a == ?!
+    # calling = a == ?!
 end
 
 # If any variables still hold values here, they can safely be ignored because

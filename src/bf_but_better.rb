@@ -311,36 +311,16 @@ def compile tok, in_global_scope: true
     compiled = ''
 
     # Keywords (high precedence)
-    if tok[0] == :sub
+    if tok[0] == :sub or tok[0] == :def or tok[0] == :fun or tok[0] == :function
         if tok.size > 3
-            error 'too many arguments for subroutine definition'
+            error 'too many arguments for function definition'
         elsif tok.size < 3
-            error 'not enough arguments for subroutine definition'
+            error 'not enough arguments for function definition'
         end
 
         name = tok[1]
         sub_code = [tok[2]]
         $subs[name] = sub_code
-
-    elsif tok[0] == :call
-        if tok.size > 2
-            error 'too many arguments for subroutine call'
-        end
-
-        name = tok[1]
-        puts 'CALLING! ' + name.to_s + '...'
-
-        if !$subs.include? name
-            error 'subroutine "' + name.to_s + '" is not defined'
-        end
-
-        # More syntactic sugar for function arguments
-        # i = 2
-        # while i < tok.size
-        #     compiled += compile [('r' + i.to_s).to_sym, :'=', tok[i]]
-        # end
-
-        compiled += compile $subs[name]
 
     elsif tok[0] == :include
         if tok.size > 2
@@ -497,6 +477,11 @@ def compile tok, in_global_scope: true
         $var[name] = $addr
         $addr += var_size
 
+    # Return (just syntactic sugar for setting the return value)
+    elsif tok[0] == :ret or tok[0] == :return
+        tokens = [:_RETURN_VALUE, :'='] + tok[1...]
+        compiled += compile tokens
+
     # Variables (higher precedence than operators)
     elsif tok[1...-1].include? :'='
         eql_index = tok.index :'='
@@ -603,8 +588,7 @@ def compile tok, in_global_scope: true
         # (and carry the value along the way, as well as the second distance
         # cell stored in the empty1 of the next address)
 
-        compiled += (
-        """
+        compiled += ('
         [
             [-<<+>>] < [-<<+>>] >>>> [-<<<+>>>]
             <<<<<-
@@ -615,7 +599,7 @@ def compile tok, in_global_scope: true
         ]
 
         <<
-        """.gsub! ' ', '').gsub! $/, ''
+        '.gsub ' ', '').gsub $/, ''
 
         # (the last line here is to align with the final address)
 
@@ -637,8 +621,7 @@ def compile tok, in_global_scope: true
 
         # Move forwards until distance is 0
 
-        compiled += (
-        """
+        compiled += ('
         [
             [->+<]
             >
@@ -649,7 +632,7 @@ def compile tok, in_global_scope: true
         ]
 
         <<
-        """.gsub! ' ', '').gsub! $/, ''
+        '.gsub ' ', '').gsub $/, ''
 
         # (the last line here is to align with the current address)
 
@@ -705,10 +688,27 @@ def compile tok, in_global_scope: true
     elsif tok[0] == :print
         compiled += (compile tok[1...]) + '.'
 
-    elsif tok[0] == :putprint
-        tok[1...].each do |token|
-            compiled += (compile [token]) + '.'
-        end
+    elsif tok[0] == :printnum
+        # We're going to assume that the current address is the top one,
+        # because otherwise, this entire operation will most likely mess
+        # with a bunch of addresses that it shouldn't mess with
+
+        compiled += compile tok[1...]
+
+        # Setup (two empty cells to the left)
+        compiled += '[->>+<<]>>'
+
+        # Print as a number
+        compiled += ('
+        >+
+        [[-]<
+        [->+<
+            [->+<[->+<[->+<[->+<[->+<[->+<[->+<[->+<
+            [->[-]>>+>+<<<]
+            ]]]]]]]]<
+        ]>>[>]++++++[-<++++++++>]>>
+        ]<<<[.[-]<<<]
+        '.gsub ' ', '').gsub $/, ''
 
     elsif tok[0] == :printstr or tok[0] == :println
         if tok.size > 2
@@ -758,10 +758,12 @@ def compile tok, in_global_scope: true
             # While second argument is > 0,
             #   subtract one from second argument and add one to first argument
             compiled += '[-<<<+>>>]'
+
         elsif b == '-' or b == '!='
             # While second argument is > 0,
             #   subtract one from both arguments
             compiled += '[-<<<->>>]'
+
         elsif b == '*' or b == 'and' or b == '&&'
             # While second argument is > 0,
             #   add first argument to itself
@@ -774,8 +776,52 @@ def compile tok, in_global_scope: true
 
             # Move back to second argument
             compiled += '>>'
-        elsif b == '/'
-            error 'division not implemented yet, try the "/" subroutine from the standard module'
+
+        elsif b == '/' or b == '//'
+            # From https://esolangs.org/wiki/Brainfuck_algorithms#x_.3D_x_.2F_y
+
+            # Start in first argument
+            compiled += '<<<'
+
+            compiled += ('
+            [>+<-]
+            >[
+                >>[<+>>+<-]
+                >[<+>-]
+                <<[
+                    >>+
+                    <<<-[>>>[-]>+<<<<-]
+                    >>>>[<<<<+>>>>-]
+                    <[
+                        <<-
+                        [<<->>[-]]+
+                    >>-]
+                <<-]
+                <<+
+            >]
+            '.gsub ' ', '').gsub $/, ''
+
+            # Move back to second argument
+            compiled += '>>'
+
+        elsif b == '%'
+            # From https://esolangs.org/wiki/Brainfuck_algorithms#Modulus_algorithm
+
+            # Setup
+            # n  0  0 ^d  0  0
+            #        vv
+            # 0 ^n  d  0  0  0
+            compiled += '<<<[->+<]>>>[-<+>]<<'
+
+            # Perform the algorithm
+            compiled += '[>->+<[>]>[<+>-]<<[<]>-]'
+
+            # Handle result (j = junk, r = result)
+            # 0 ^0  j  r  0  0
+            #        vv
+            # r  0  0 ^0  0  0
+            compiled += '>[-]>[-<<<+>>>]'
+
         elsif b == '=='
             # (Subtraction '-')
             # (Logical NOT '!')
@@ -798,6 +844,7 @@ def compile tok, in_global_scope: true
 
             # Move back to second argument
             compiled += '>>>'
+
         elsif b == '>' or b == '<' or b == '>=' or b == '<='
             # Memory: r0 empty1 condition r1 empty3 empty4
             #                             ^^
@@ -1029,8 +1076,7 @@ def compile tok, in_global_scope: true
         # (and carry the second distance cell stored in the empty1 of the
         # next address)
 
-        compiled += (
-        """
+        compiled += ('
         [
             [-<<+>>] >>> [-<<<+>>>]
             <<<<<-
@@ -1041,7 +1087,7 @@ def compile tok, in_global_scope: true
         ]
 
         <<
-        """.gsub! ' ', '').gsub! $/, ''
+        '.gsub ' ', '').gsub $/, ''
 
         # (the last line here is to align with the final address)
 
@@ -1061,8 +1107,7 @@ def compile tok, in_global_scope: true
         # Move forwards until distance is 0
         # (and carry the value along the way)
 
-        compiled += (
-        """
+        compiled += ('
         [
             [->>>+<<<] > [->>>+<<<]
             >>-
@@ -1071,7 +1116,7 @@ def compile tok, in_global_scope: true
                 >>-
             ]
         ]
-        """.gsub! ' ', '').gsub! $/, ''
+        '.gsub ' ', '').gsub $/, ''
 
         # Copy value from empty2 to the current address
         compiled += '>[-<<+>>]'
@@ -1083,13 +1128,51 @@ def compile tok, in_global_scope: true
 
         # Done
 
+    elsif tok.size > 1 and tok[1].to_s.start_with? '(' and tok[1].to_s.end_with? ')'
+        if !(Symbol === tok[0])
+            error 'invalid function name "' + tok[0].to_s + '"'
+        end
+
+        if tok.size > 2
+            error 'too many arguments for function calling'
+        end
+
+        name = tok[0]
+        puts 'CALLING! ' + name.to_s + '...'
+
+        if !$subs.include? name
+            error 'function "' + name.to_s + '" is not defined'
+        end
+
+        # Syntactic sugar for function arguments
+        # (r0, r1, r2, ...)
+
+        arg_code = tok[1][1...-1]
+        arg_tok = to_type_tokens tokenise arg_code
+        args = array_split arg_tok, :','
+
+        i = 0
+        while i < args.size
+            compiled += compile [('r' + i.to_s).to_sym, :'='] + args[i]
+            i += 1
+        end
+
+        compiled += compile $subs[name]
+
+        # Get return value
+        compiled += compile [:_RETURN_VALUE]
+
     # Code block (should be low precedence)
     elsif (
-        tok[0].to_s.start_with? ?{ and tok[0].to_s.end_with? ?}
+        tok[0].to_s.start_with? '{' and tok[0].to_s.end_with? '}'
     ) or (
-        tok[0].to_s.start_with? ?( and tok[0].to_s.end_with? ?)
+        tok[0].to_s.start_with? '(' and tok[0].to_s.end_with? ')'
     )
         # is_multi_line = (tok[0].to_s.start_with? ?{ and tok[0].to_s.end_with? ?})
+
+        # Clear the current cell in case anything happened before this code
+        # block on the same line
+        compiled += '[-]'
 
         code = tok[0][1...-1]
         code_tok = file_tok code
@@ -1150,25 +1233,48 @@ def compile tok, in_global_scope: true
 
     # Numbers (should be very low precedence)
     elsif Integer === tok[0] and tok.size == 1
-        split = [
-            tok[0] / 10,
-            tok[0] % 10,
-        ]
+        n = tok[0]
 
-        # Clear the two cells used to create this integer
-        compiled += '[-]>[-]<'
+        if n < 20
+            compiled += '[-]' + '+' * n
 
-        # Don't modify the address ($addr) because this isn't moving far
-        # enough to call it a new address
+        elsif n < 200
+            digits = [n / 10, n % 10]
 
-        # Add the first split
-        if split[0] > 0
-            compiled += '>' + '+' * split[0]
+            # Clear the two cells used to create this integer
+            compiled += '[-]>[-]<'
+
+            # Add the first digit
+            compiled += '>' + '+' * digits[0]
             compiled += '[<' + ('+' * 10) + '>-]<'
-        end
 
-        # Now add the remainder
-        compiled += '+' * split[1]
+            # Now add the second digit
+            compiled += '+' * digits[1]
+
+        else
+            digits = []
+
+            while n > 0
+                digits.insert 0, n % 32
+                n /= 32
+            end
+
+            # Clear the three cells used to create this integer
+            compiled += '[-]>[-]>[-]<<'
+
+            digits[...-1].each do |digit|
+                # Add the value of this digit
+                compiled += '+' * digit
+                # compiled += '[<' + ('+' * 10) + '>-]<'
+
+                # Multiply number by 32
+                compiled += "[->+>+<<]>>[-<<#{'+' * 16}>>]<[-<#{'+' * 16}>]<"
+            end
+
+            # Now add the final digit
+            compiled += '+' * digits[-1]
+
+        end
 
     # Errors
     else
@@ -1179,6 +1285,11 @@ def compile tok, in_global_scope: true
 end
 
 def compile_file_code code, fname: '<string>'
+    # Save the line that the program is currently on
+    old_line = $current_line
+    $current_line = 0
+
+    # Compile the code
     compiled = ''
 
     code_tokenised = file_tok code
@@ -1189,6 +1300,9 @@ def compile_file_code code, fname: '<string>'
         tok = to_type_tokens tokenise line
         compiled += compile tok
     end
+
+    # Go back to the correct line when finishing this function
+    $current_line = old_line
 
     compiled
 end
@@ -1309,7 +1423,7 @@ end
 
 def post_process code
     # For starters, strip any trailing characters that produce no output
-    code = code.rstrip '+-><[]'
+    code = code.rstrip '+-><'
 
     # Fix adjacent characters
     code = fix_adjacent_characters code
@@ -1329,11 +1443,12 @@ def post_process code
 
 
     # Remove unnecessary loops using a mini-interpreter
-    code = remove_unnecessary_loops code
+    # code = remove_unnecessary_loops code
 
 
     # Fix adjacent characters (again)
     processed = fix_adjacent_characters code
+    # processed = code
 
     # Final substitutions
     c = processed
@@ -1396,8 +1511,10 @@ $compiled = ''
 # $addr1, empty, empty, $addr2, empty, empty, $addr3, empty, empty...
 # The empty cells are there to make operations easier to perform
 
-$addr = 0
-$var = {}
+$addr = 1
+$var = {
+    _RETURN_VALUE: 0,
+}
 $subs = {}
 # $modules = {}
 $builtin_modules = {}
@@ -1407,13 +1524,13 @@ Dir['./builtins/*.bfb'].each do |path|
     $builtin_modules[module_id] = path
 end
 
-# Tokenise the subroutines
+# Tokenise the functions
 # $subs.each_key do |name|
 #     $subs[name] = to_type_tokens tokenise $subs[name]
 # end
 
 # Compile whole input file
-$compiled = compile_file_code $code, fname: $fname
+$compiled = '>>>' + (compile_file_code $code, fname: $fname)
 
 # Post processing
 $clean_code = post_process $compiled

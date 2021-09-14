@@ -1,29 +1,24 @@
-<> Declarations for subroutines in this module
-dec r0
-dec r1
-dec R0
-dec R1
+<> Declarations for functions in this module
+r0 = 0
+<> r1 = 0
+<> R0 = 0
+<> R1 = 0
 
-dec _factorial_number
-dec _factorial_result
-dec _factorial_i
+_factorial_result = 0
+_factorial_i = 0
 
 <> Calculate the factorial of a number
-sub factorial {
+def factorial {
     <> Args
     <> r0: Number to calculate the factorial of
 
-    <> Returns
-    <> R0: Calculated factorial
-
-    _factorial_number = r0
     _factorial_result = 1
     _factorial_i = 2
 
-    while _factorial_i <= _factorial_number {
+    while _factorial_i <= r0 {
         _factorial_result *= _factorial_i
         ++_factorial_i
     }
 
-    R0 = _factorial_result
+    ret _factorial_result
 }

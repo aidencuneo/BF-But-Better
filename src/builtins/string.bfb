@@ -1,0 +1,44 @@
+<> Declarations for functions in this module
+r0 = 0
+r1 = 0
+
+<> Reusable variables
+_string_char = 0
+_string_index = 0
+
+<> Print string until null byte is found
+def printf {
+    _string_char = *r0
+
+    for _string_index = 0; _string_char; {
+        print _string_char
+        ++_string_index
+        _string_char = *(r0 + _string_index)
+    }
+
+    ret _string_index
+}
+
+<> Get a line of input
+def getline {
+    _string_char = input
+
+    for _string_index = 0; _string_char != '\n'; ++_string_index {
+        r0 + _string_index := _string_char
+        _string_char = input
+    }
+
+    ret _string_index
+}
+
+<> Read until the given character is found
+def scan {
+    _string_char = input
+
+    for _string_index = 0; _string_char != r1; ++_string_index {
+        r0 + _string_index := _string_char
+        _string_char = input
+    }
+
+    ret _string_index
+}

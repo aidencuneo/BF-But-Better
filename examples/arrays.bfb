@@ -1,9 +1,12 @@
-include standard
-<> include math
-
+<> Array declaration
 dec array 128
 ARRAY_SIZE = 128
 
+<> Include builtins
+include standard
+<> include math
+
+<> Main program
 for i = 0; i < ARRAY_SIZE; ++i {
     (&array) + i := i + 1
 }

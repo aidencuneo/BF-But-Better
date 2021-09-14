@@ -1,0 +1,14 @@
+include string
+
+println "Hi, what's your name?"
+
+dec name_arr 64  <> Name can't be longer than 64 characters
+name = &name_arr <> Create pointer to name array
+
+<> Get name as well as length
+length = getline(name)
+
+printstr 'Hello, '
+printf(name)
+print '!'
+print '\n'
