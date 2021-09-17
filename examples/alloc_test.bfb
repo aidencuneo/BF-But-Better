@@ -1,5 +1,5 @@
 include alloc
-include io
+include string
 
 dec ptr1
 <> dec ptr2
@@ -8,18 +8,13 @@ dec ptr1
 alloc_init()
 
 
-ptr1 = malloc(6)
+ptr1 = malloc(18)
 
 printnum ptr1
 print '\n'
 
 ptr1 :> 'aiden'
-
-ptr1 + 0 :> 'a'
-ptr1 + 1 :> 'i'
-ptr1 + 2 :> 'd'
-ptr1 + 3 :> 'e'
-ptr1 + 4 :> 'n'
+ptr1 + strlen(ptr1) :> 'blishen'
 
 printf(ptr1)
 print '\n'

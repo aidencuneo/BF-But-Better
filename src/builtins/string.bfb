@@ -42,3 +42,7 @@ def scan {
 
     ret _io_index
 }
+
+def strlen {
+
+}

@@ -544,8 +544,30 @@ def compile tok, in_global_scope: true
         address = tok[...eql_index]
         value = tok[eql_index + 1...]
 
-        puts address.to_s
-        puts value.to_s
+        if String === value[0]
+            if value.size != 1
+                error 'invalid syntax in backward address assignment'
+            end
+
+            i = 0
+            string_to_assign = value[0].chars + ["\0"]
+
+            while i < string_to_assign.size
+                value = string_to_assign[i].ord
+
+                calculation = [
+                    '(' + (address.map {|x| x.to_s}).join(' ') + ')',
+                    :+, i, :':<', value,
+                ]
+
+                compiled += compile calculation
+
+                i += 1
+            end
+
+            # Don't do the normal forward address assignment stuff
+            return compiled
+        end
 
         # During most of this operation, the compiler doesn't know where the
         # pointer is, which means the pointer must come back to exactly where
@@ -652,8 +674,30 @@ def compile tok, in_global_scope: true
         address = tok[...eql_index]
         value = tok[eql_index + 1...]
 
-        puts address.to_s
-        puts value.to_s
+        if String === value[0]
+            if value.size != 1
+                error 'invalid syntax in forward address assignment'
+            end
+
+            i = 0
+            string_to_assign = value[0].chars + ["\0"]
+
+            while i < string_to_assign.size
+                value = string_to_assign[i].ord
+
+                calculation = [
+                    '(' + (address.map {|x| x.to_s}).join(' ') + ')',
+                    :+, i, :':>', value,
+                ]
+
+                compiled += compile calculation
+
+                i += 1
+            end
+
+            # Don't do the normal forward address assignment stuff
+            return compiled
+        end
 
         # During most of this operation, the compiler doesn't know where the
         # pointer is, which means the pointer must come back to exactly where
