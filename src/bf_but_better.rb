@@ -479,6 +479,7 @@ def compile tok, in_global_scope: true
 
     # Return (just syntactic sugar for setting the return value)
     elsif tok[0] == :ret or tok[0] == :return
+        # THIS KEYWORD DOES NOT ESCAPE A FUNCTION
         tokens = [:_RETURN_VALUE, :'='] + tok[1...]
         compiled += compile tokens
 
@@ -532,13 +533,13 @@ def compile tok, in_global_scope: true
                 ' doesn\'t exist yet, use "dec ' + name.to_s + '")')
         end
 
-    # Address assignment (equal precedence to variable assignment)
-    elsif tok[1...-1].include? :':='
+    # Backward address assignment (equal precedence to variable assignment)
+    elsif tok[1...-1].include? :':<'
         # Address assignment isn't as flexible as variable assignment, so you
         # can't assign to an address backwards the same way you can assign to
         # a variable backwards (15 = variable)
 
-        eql_index = tok.index :':='
+        eql_index = tok.index :':<'
 
         address = tok[...eql_index]
         value = tok[eql_index + 1...]
@@ -640,6 +641,119 @@ def compile tok, in_global_scope: true
 
         # Done
 
+    # Forward address assignment (equal precedence to variable assignment)
+    elsif tok[1...-1].include? :':>'
+        # Address assignment isn't as flexible as variable assignment, so you
+        # can't assign to an address backwards the same way you can assign to
+        # a variable backwards (15 = variable)
+
+        eql_index = tok.index :':>'
+
+        address = tok[...eql_index]
+        value = tok[eql_index + 1...]
+
+        puts address.to_s
+        puts value.to_s
+
+        # During most of this operation, the compiler doesn't know where the
+        # pointer is, which means the pointer must come back to exactly where
+        # it was when this operation began
+
+        # Compile the value to assign
+        compiled += compile value
+
+        # Figure out how many times the program needs to go forwards before
+        # it reaches the desired address
+
+        # Distance = desired address - current address
+        # !!! Distance must not equal 0 !!!
+
+        calculation = [
+            '(' + (address.map {|x| x.to_s}).join(' ') + ')',
+            :-, $addr,
+        ]
+
+        # Put this into the address after the current one
+        compiled += '>>>'
+        $addr += 1
+
+        compiled += compile calculation
+
+        # Copy it into empty1 (the cell directly after the current one)
+        # and also the empty1 of the previous address
+        compiled += '[-<<+<<<+>>>>>]'
+
+        # Move back and point at the distance cell
+        compiled += '<<'
+        $addr -= 1
+
+        # Now, in this address, we have: value, <distance>, empty2 (0)
+        # And in the previous, we have:  some value, distance, empty2 (0)
+
+        # abort compiled
+
+        # Use the distance to go forward to the specified address
+
+        # Move forwards until distance is 0
+        # (and carry the value along the way, as well as the second distance
+        # cell stored in the empty1 of the previous address)
+
+        compiled += ('
+        [
+            [->>>+<<<] < [->>>>>+<<<<<] << [->>>+<<<]
+            >>>>>>-
+            [
+                [->>>+<<<] > [->>>+<<<] <<<< [->>>+<<<]
+                >>>>>>-
+            ]
+        ]
+
+        <
+        '.gsub ' ', '').gsub $/, ''
+
+        # abort compiled
+
+        # (the last line here is to align with the final address)
+
+        # The desired address has been reached
+
+        # Now copy the value from empty2 to its new home (but not before
+        # clearing the old value))
+        compiled += '[-]>>[-<<+>>]<<'
+
+        # abort compiled
+
+        # Copy the second distance cell to empty1
+        compiled += '<<[->>>+<<<]'
+
+        # Point at empty1
+        compiled += '>>>'
+
+        # DONE UP TO THIS POINT
+
+        # Go backward to the current address
+
+        # Move backwards until distance is 0
+
+        compiled += ('
+        [
+            [-<<<+>>>]
+            <<<
+            [
+                [-<<<+>>>]
+                <<<-
+            ]
+        ]
+
+        >>
+        '.gsub ' ', '').gsub $/, ''
+
+        # (the last line here is to align with the current address)
+
+        # Current address has been reached
+
+        # Done
+
     # Inplace assignment (just syntactic sugar)
     elsif (
         tok[1...-1].include? :'+='
@@ -685,8 +799,26 @@ def compile tok, in_global_scope: true
         compiled += compile tokens
 
     # Keyword functions (higher precedence than operators, but lower than variables)
-    elsif tok[0] == :print
-        compiled += (compile tok[1...]) + '.'
+    elsif tok[0] == :print or tok[0] == :println
+        # If a string was passed into the print keyword
+        if tok.size == 2 and String === tok[1]
+            str = tok[1]
+            puts str
+
+            # Print the string letter by letter
+            str.chars.each do |ch|
+                compiled += (compile [ch.ord]) + '.'
+            end
+
+        # Otherwise, print the given expression as a character
+        else
+            compiled += (compile tok[1...]) + '.'
+        end
+
+        # Print a newline if this is the println keyword
+        if tok[0] == :println
+            compiled += (compile [10]) + '.'
+        end
 
     elsif tok[0] == :printnum
         # We're going to assume that the current address is the top one,
@@ -709,27 +841,6 @@ def compile tok, in_global_scope: true
         ]>>[>]++++++[-<++++++++>]>>
         ]<<<[.[-]<<<]
         '.gsub ' ', '').gsub $/, ''
-
-    elsif tok[0] == :printstr or tok[0] == :println
-        if tok.size > 2
-            error "too many arguments given to #{tok[0]} keyword"
-        end
-
-        str = tok[1]
-        puts str
-
-        # Print the string letter by letter
-        str.chars.each do |ch|
-            compiled += compile [:print, ch.ord]
-        end
-
-        # Print a newline if this is println
-        if tok[0] == :println
-            compiled += compile [:print, 10]
-        end
-
-    elsif tok[0] == :input
-        compiled += ','
 
     # Binary operators
     elsif $bin_opers.include? tok[1].to_s
@@ -1028,10 +1139,10 @@ def compile tok, in_global_scope: true
 
         compiled += compile [address]
 
-    # Dereference
-    elsif tok[0] == :*
+    # Dereference backwards
+    elsif tok[0] == :'*<'
         if tok.size > 2
-            error 'too many arguments for the dereference operator ("*")'
+            error 'too many arguments for the backwards dereference operator ("*<")'
         end
 
         address = [tok[1]]
@@ -1128,6 +1239,101 @@ def compile tok, in_global_scope: true
 
         # Done
 
+    # Dereference forwards
+    elsif tok[0] == :'*>'
+        if tok.size > 2
+            error 'too many arguments for the forwards dereference operator ("*>")'
+        end
+
+        address = [tok[1]]
+        puts address.to_s
+
+        # During most of this operation, the compiler doesn't know where the
+        # pointer is, which means the pointer must come back to exactly where
+        # it was when this operation began
+
+        # Figure out how many times the program needs to go forwards before
+        # it reaches the desired address
+
+        # Distance = desired address - current address
+        # !!! Distance must not equal 0 !!!
+
+        calculation = [
+            '(' + (address.map {|x| x.to_s}).join(' ') + ')',
+            :-, $addr,
+        ]
+
+        # Put this into the address after the current one
+        compiled += '>>>'
+        $addr += 1
+
+        compiled += compile calculation
+
+        # Copy it into empty1 (the cell directly after the current one)
+        # and also the empty1 of the previous address
+        compiled += '[-<<+<<<+>>>>>]'
+
+        # Move back and point at the distance cell
+        compiled += '<<'
+        $addr -= 1
+
+        # Now, in this address, we have: 0, <distance>, empty2 (0)
+        # And in the previous, we have:  some value, distance, empty2 (0)
+
+        # Use the distance to go back to the specified address
+
+        # Move forwards until distance is 0
+        # (and carry the second distance cell stored in the empty1 of the
+        # previous address)
+
+        compiled += ('
+        [
+            [->>>+<<<] <<< [->>>+<<<]
+            >>>>>>-
+        ]
+
+        <
+        '.gsub ' ', '').gsub $/, ''
+
+        # (the last line here is to align with the final address)
+
+        # The desired address has been reached
+
+        # Now copy the value from this address to empty2
+        compiled += '[->+>+<<]>[-<+>]<'
+
+        # Copy the second distance cell to empty1
+        compiled += '<<[->>>+<<<]'
+
+        # Point at empty1
+        compiled += '>>>'
+
+        # Go forward to the current address
+
+        # Move forwards until distance is 0
+        # (and carry the value along the way)
+
+        compiled += ('
+        [
+            [-<<<+>>>] > [-<<<+>>>]
+            <<<<-
+            [
+                [-<<<+>>>] > [-<<<+>>>]
+                <<<<-
+            ]
+        ]
+        '.gsub ' ', '').gsub $/, ''
+
+        # Copy value from empty2 to the current address
+        compiled += '>[-<<+>>]'
+
+        # Align with the current address
+        compiled += '<<'
+
+        # Current address has been reached
+
+        # Done
+
     elsif tok.size > 1 and tok[1].to_s.start_with? '(' and tok[1].to_s.end_with? ')'
         if !(Symbol === tok[0])
             error 'invalid function name "' + tok[0].to_s + '"'
@@ -1153,7 +1359,10 @@ def compile tok, in_global_scope: true
 
         i = 0
         while i < args.size
-            compiled += compile [('r' + i.to_s).to_sym, :'='] + args[i]
+            if !args[i].empty?
+                compiled += compile [('r' + i.to_s).to_sym, :'='] + args[i]
+            end
+
             i += 1
         end
 
@@ -1186,6 +1395,13 @@ def compile tok, in_global_scope: true
     # Inline code (should be very low precedence)
     elsif tok[0].to_s.start_with? ?` and tok[0].to_s.end_with? ?`
         compiled += tok[0][1...-1]
+
+    # Zero argument keywords (precedence just above symbols)
+    elsif tok[0] == :input
+        compiled += ','
+
+    elsif tok[0] == :addr
+        compiled += compile [$addr]
 
     # Symbols (should be very low precedence)
     elsif Symbol === tok[0] and tok.size == 1

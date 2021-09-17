@@ -1,0 +1,41 @@
+<> You may include this module at any point in your program, but please only
+<> call the alloc_init function after your final declaration. The alloc_init
+<> function converts new variable space into memory for use with this module.
+
+<> Many other builtin modules and operators use the features of this module,
+<> so it's highly likely that you'll end up including this module in most of
+<> your BFB programs. For example: both the `*>` and `:>` builtin operators
+<> use the memory that this module manages.
+
+<> Declarations for functions in this module
+r0 = 0
+r1 = 0
+
+_alloc_mem_start = 0
+_alloc_mem_activated = 0
+
+_malloc_ptr = 0
+
+def alloc_init {
+    <> + 4 to create some space between the top address and the first
+    <> memory address
+    _alloc_mem_start = addr + 4
+    _alloc_mem_activated = 1
+}
+
+def malloc {
+    if !_alloc_mem_activated {
+        print '(alloc.bfb) Warning: memory allocation not activated, '
+        print 'use alloc_init() before allocating memory'
+        print '\n'
+    }
+
+    <> Args
+    <> r0: size of allocation
+
+    _malloc_ptr = _alloc_mem_start
+    _alloc_mem_start += r0
+
+    <> Return pointer to allocated memory
+    ret _malloc_ptr
+}

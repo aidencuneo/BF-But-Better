@@ -1,0 +1,25 @@
+include alloc
+include io
+
+dec ptr1
+<> dec ptr2
+<> dec ptr3
+
+alloc_init()
+
+
+ptr1 = malloc(6)
+
+printnum ptr1
+print '\n'
+
+ptr1 :> 'aiden'
+
+ptr1 + 0 :> 'a'
+ptr1 + 1 :> 'i'
+ptr1 + 2 :> 'd'
+ptr1 + 3 :> 'e'
+ptr1 + 4 :> 'n'
+
+printf(ptr1)
+print '\n'
