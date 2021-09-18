@@ -6,7 +6,7 @@ class String
     def rstrip s
         n = self
         while s.chars.include? n[-1]
-            n = n[...-1]
+            n = n[0...-1]
         end
 
         n
@@ -59,6 +59,9 @@ scanned.each do |scan|
 
     $code = $code.gsub scan, rep
 end
+
+# Procedures
+
 
 # Double cell copying (doesn't work because of cases such as: [->+>>>>+<<<<<])
 # scanned = $code.scan /(\[\->+\+>+\+<+\])|(\[>+\+>+\+<+\-\])|(\[\-<+\+<+\+>+\])|(\[<+\+<+\+>+\-\])/

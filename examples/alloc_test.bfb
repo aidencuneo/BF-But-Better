@@ -1,20 +1,27 @@
 include alloc
 include string
 
-dec ptr1
-<> dec ptr2
-<> dec ptr3
+dec code
+dec code_size
+dec ptr2
 
 alloc_init()
 
+code = malloc_unsized()
+code_size = getline(code, 0)
+realloc_last(code_size + 1)
 
-ptr1 = malloc(18)
+ptr2 = malloc(18)
 
-printnum ptr1
+printnum code
 print '\n'
 
-ptr1 :> 'aiden'
-ptr1 + strlen(ptr1) :> 'blishen'
+ptr2 :> 'aiden'
+ptr2 + strlen(ptr2) :> 'blishen'
+ptr2 + strlen(ptr2) :> 'cuneo'
 
-printf(ptr1)
-print '\n'
+print 'First: '
+printf(code)
+print ' ;; Second: '
+printf(ptr2)
+print ' ;;\n'

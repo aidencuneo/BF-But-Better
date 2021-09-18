@@ -1,0 +1,95 @@
+include alloc
+include string
+
+<> Declarations
+dec code
+dec code_size
+dec ptr
+
+dec scope
+dec break_var
+dec c
+dec i
+
+<> Alloc
+alloc_init()
+
+<> Collect code
+code = malloc_unsized()
+code_size = getline(code, 0)
+realloc_last(code_size + 1)
+
+<> printnum code_size
+<> print '\n'
+
+<> Program memory
+ptr = malloc_unsized()
+
+<> Program start
+for i = 0; i != code_size; ++i {
+    <> Current character
+    c = *>(code + i)
+
+    <> print c
+    <> print ' '
+    <> printnum i
+    <> print '\n'
+
+    if c == '+' { ptr :> ((*>ptr) + 1) % 256 }
+    if c == '-' { ptr :> ((*>ptr) - 1) % 256 }
+    if c == '>' { ++ptr }
+    if c == '<' { --ptr }
+    if c == ',' { ptr >= input }
+    if c == '.' { print *>ptr }
+    if c == '[' {
+        <> Skip to ']' if !(*ptr)
+        if !(*>ptr) {
+            scope = 1
+            break_var = 0
+
+            <> Iterate through code until corresponding ']' is reached
+            while (i != code_size) and (break_var == 0) {
+                ++i
+
+                if (*>(code + i)) == '[' {
+                    ++scope
+                }
+
+                if (*>(code + i)) == ']' {
+                    --scope
+                }
+
+                <> Break once scope 0 is reached
+                if scope == 0 {
+                    break_var = 1
+                }
+            }
+        }
+    }
+    if c == ']' {
+        <> Rewind to '[' if mem[ptr]
+        <> (Pretty much the same as what happens with '[', but backwards)
+        if *>ptr {
+            scope = 1
+            break_var = 0
+
+            <> Iterate through code until corresponding '[' is reached
+            while i and (break_var == 0) {
+                --i
+
+                if (*>(code + i)) == ']' {
+                    ++scope
+                }
+
+                if (*>(code + i)) == '[' {
+                    --scope
+                }
+
+                <> Break once scope 0 is reached
+                if scope == 0 {
+                    break_var = 1
+                }
+            }
+        }
+    }
+}

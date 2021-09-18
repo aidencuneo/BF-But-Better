@@ -1,3 +1,31 @@
-<> There actually isn't anything here right now
-<> I took care of printnum with the new keyword, and I made builtin operators
-<> for division and modulus, so I don't really know what to put in here yet
+<> Since this module is included with every BFB program, this also means that
+<> every BFB module can use these functions and variables
+
+<> Declarations (all modules)
+r0 = 0
+r1 = 0
+r2 = 0
+
+<> Reusable variables (all modules)
+
+<> Find the minimum out of two numbers
+def min {
+    if r1 < r0 {
+        ret r1
+    }
+
+    if r0 <= r1 {
+        ret r0
+    }
+}
+
+<> Find the maximum out of two numbers
+def max {
+    if r1 > r0 {
+        ret r1
+    }
+
+    if r0 >= r1 {
+        ret r0
+    }
+}

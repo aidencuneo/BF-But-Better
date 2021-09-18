@@ -6,7 +6,7 @@ class String
     def rstrip s
         n = self
         while s.chars.include? n[-1]
-            n = n[...-1]
+            n = n[0...-1]
         end
 
         n
@@ -541,7 +541,7 @@ def compile tok, in_global_scope: true
 
         eql_index = tok.index :':<'
 
-        address = tok[...eql_index]
+        address = tok[0...eql_index]
         value = tok[eql_index + 1...]
 
         if String === value[0]
@@ -671,7 +671,7 @@ def compile tok, in_global_scope: true
 
         eql_index = tok.index :':>'
 
-        address = tok[...eql_index]
+        address = tok[0...eql_index]
         value = tok[eql_index + 1...]
 
         if String === value[0]
@@ -682,12 +682,18 @@ def compile tok, in_global_scope: true
             i = 0
             string_to_assign = value[0].chars + ["\0"]
 
+            # Save initial pointer for later
+            # I'm using _RETURN_VALUE just because it's a quick value to use
+            compiled += compile [
+                :_RETURN_VALUE, :'=',
+                '(' + (address.map {|x| x.to_s}).join(' ') + ')',
+            ]
+
             while i < string_to_assign.size
                 value = string_to_assign[i].ord
 
                 calculation = [
-                    '(' + (address.map {|x| x.to_s}).join(' ') + ')',
-                    :+, i, :':>', value,
+                    :_RETURN_VALUE, :+, i, :':>', value,
                 ]
 
                 compiled += compile calculation
@@ -888,22 +894,25 @@ def compile tok, in_global_scope: true
 
     # Binary operators
     elsif $bin_opers.include? tok[1].to_s
-        if tok.size > 3
-            error 'too many tokens in a line that performs a binary operation'
-        elsif tok.size < 3
+        # if tok.size > 3
+        #     error 'too many tokens in a line that performs a binary operation'
+        if tok.size < 3
             error 'invalid syntax'
         end
 
-        a, b, c = tok
-        b = b.to_s
+        # For now, a and b must be single tokens, but c can be multiple tokens
+        a = [tok[0]]
+        b = tok[1].to_s
+        c = tok[2...]
+
         puts a.to_s + ' ' + b.to_s + ' ' + c.to_s
 
         # Load first argument into current address
         # Load second argument into the cell directly after the current address
-        compiled += compile [a]
+        compiled += compile a
         compiled += '>>>'
         $addr += 1
-        compiled += compile [c]
+        compiled += compile c
         # Begin operations in the address just after the current address
 
         # Memory: addr1 empty1 empty2 addr2 empty3 empty4
@@ -1522,7 +1531,7 @@ def compile tok, in_global_scope: true
             # Clear the three cells used to create this integer
             compiled += '[-]>[-]>[-]<<'
 
-            digits[...-1].each do |digit|
+            digits[0...-1].each do |digit|
                 # Add the value of this digit
                 compiled += '+' * digit
                 # compiled += '[<' + ('+' * 10) + '>-]<'
@@ -1676,7 +1685,7 @@ def remove_unnecessary_loops code
         last_char = char
     end
 
-    puts cell_map.to_s[...100]
+    puts cell_map.to_s[0...100]
 
     processed
 end
@@ -1789,8 +1798,11 @@ end
 #     $subs[name] = to_type_tokens tokenise $subs[name]
 # end
 
+# Include standard module for useful things
+$compiled = compile [:include, :standard]
+
 # Compile whole input file
-$compiled = '>>>' + (compile_file_code $code, fname: $fname)
+$compiled += ('>>>' * $addr) + (compile_file_code $code, fname: $fname)
 
 # Post processing
 $clean_code = post_process $compiled

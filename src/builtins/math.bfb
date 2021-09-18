@@ -1,9 +1,4 @@
-<> Declarations for functions in this module
-r0 = 0
-<> r1 = 0
-<> R0 = 0
-<> R1 = 0
-
+<> Variables
 _factorial_result = 0
 _factorial_i = 0
 

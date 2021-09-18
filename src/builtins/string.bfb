@@ -1,48 +1,85 @@
-<> Declarations for functions in this module
-r0 = 0
-r1 = 0
-
 <> Reusable variables
-_io_char = 0
-_io_index = 0
+_char = 0
+_char2 = 0
+_index = 0
+_break = 0
+_length = 0
+_result = 0
+_str1 = 0
+_str2 = 0
+_str1_len = 0
+_str2_len = 0
 
 <> Print string until null byte is found
 def printf {
-    _io_char = *>r0
+    _char = *>r0
 
-    for _io_index = 0; _io_char; {
-        print _io_char
-        ++_io_index
-        _io_char = *>(r0 + _io_index)
+    for _index = 0; _char; {
+        print _char
+        ++_index
+        _char = *>(r0 + _index)
     }
 
-    ret _io_index
+    ret _index
 }
 
 <> Get a line of input
 def getline {
-    _io_char = input
+    _char = input
 
-    for _io_index = 0; _io_char != '\n'; ++_io_index {
-        r0 + _io_index :> _io_char
-        _io_char = input
+    for _index = 0; (_char != '\n') and ((_index < r1) or (!r1)); ++_index {
+        r0 + _index :> _char
+        _char = input
     }
 
-    ret _io_index
+    ret _index
 }
 
 <> Read until the given character is found
 def scan {
-    _io_char = input
+    _char = input
 
-    for _io_index = 0; _io_char != r1; ++_io_index {
-        r0 + _io_index :> _io_char
-        _io_char = input
+    for _index = 0; (_char != r1) and ((_index < r2) or (!r2)); ++_index {
+        r0 + _index :> _char
+        _char = input
     }
 
-    ret _io_index
+    ret _index
 }
 
 def strlen {
+    _char = *>r0
 
+    for _index = 0; _char; {
+        ++_index
+        _char = *>(r0 + _index)
+    }
+
+    ret _index
+}
+
+def streq {
+    _str1 = r0
+    _str2 = r1
+
+    _str1_len = strlen(_str1)
+    _str2_len = strlen(_str2)
+
+    _length = max(_str1_len, _str2_len)
+
+    _char = *>_str1
+    _char2 = *>_str2
+    _result = 1
+
+    for _index = 0; (!_break) and (_index < _length); ++_index {
+        if _char != _char2 {
+            _result = 0
+            _break = 1
+        }
+
+        _char = *>(r0 + _index)
+        _char2 = *>(r1 + _index)
+    }
+
+    ret _result
 }

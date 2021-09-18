@@ -1,0 +1,15 @@
+for i = 99; i; {
+    printnum i
+    println ' Bottles of beer on the wall'
+
+    printnum i
+    println ' Bottles of beer'
+
+    println 'Take one down and pass it around'
+
+    --i
+    printnum i
+    println ' Bottles of beer on the wall'
+
+    print '\n'
+}

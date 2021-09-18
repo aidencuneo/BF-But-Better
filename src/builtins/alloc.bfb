@@ -7,10 +7,7 @@
 <> your BFB programs. For example: both the `*>` and `:>` builtin operators
 <> use the memory that this module manages.
 
-<> Declarations for functions in this module
-r0 = 0
-r1 = 0
-
+<> Variables
 _alloc_mem_start = 0
 _alloc_mem_activated = 0
 
@@ -23,11 +20,15 @@ def alloc_init {
     _alloc_mem_activated = 1
 }
 
+def alloc_warn {
+    print '(alloc.bfb) Warning: memory allocation not activated, '
+    print 'use alloc_init() before allocating memory'
+    print '\n'
+}
+
 def malloc {
     if !_alloc_mem_activated {
-        print '(alloc.bfb) Warning: memory allocation not activated, '
-        print 'use alloc_init() before allocating memory'
-        print '\n'
+        alloc_warn()
     }
 
     <> Args
@@ -38,4 +39,27 @@ def malloc {
 
     <> Return pointer to allocated memory
     ret _malloc_ptr
+}
+
+<> Used to allocate an unsized memory chunk (must be given a size before more
+<> memory can be allocated)
+def malloc_unsized {
+    if !_alloc_mem_activated {
+        alloc_warn()
+    }
+
+    ret _alloc_mem_start
+}
+
+<> Usually used after malloc_unsized; realloc_last will increase the size of
+<> the most recently allocated memory chunk
+def realloc_last {
+    if !_alloc_mem_activated {
+        alloc_warn()
+    }
+
+    <> Args
+    <> r0: size to increase by
+
+    _alloc_mem_start += r0
 }
